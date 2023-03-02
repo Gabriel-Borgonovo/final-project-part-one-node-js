@@ -1,0 +1,41 @@
+[
+  {
+    "code": "1",
+    "title": "Proteina True Made",
+    "description": "Proteina en polvo",
+    "price": "7500",
+    "stock": "70",
+    "category": "proteinas",
+    "thumbnail": [
+      "1677719025655-proteina1.jpg"
+    ],
+    "status": true,
+    "id": 1
+  },
+  {
+    "code": "2",
+    "title": "ENA Whey Protein",
+    "description": "Proteina en polvo",
+    "price": "8000",
+    "stock": "50",
+    "category": "proteinas",
+    "thumbnail": [
+      "1677719158188-proteina2.webp"
+    ],
+    "status": true,
+    "id": 2
+  },
+  {
+    "code": "3",
+    "title": "Best fruit Creatine",
+    "description": "Creatina en polvo",
+    "price": "9000",
+    "stock": "10",
+    "category": "creatinas",
+    "thumbnail": [
+      "1677719264503-creatina1.png"
+    ],
+    "status": true,
+    "id": 3
+  }
+]
