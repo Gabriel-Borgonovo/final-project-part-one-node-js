@@ -37,5 +37,96 @@
     ],
     "status": true,
     "id": 3
+  },
+  {
+    "code": "4",
+    "title": "Par De Mancuernas Hexagonales De Caucho MIR",
+    "description": "Mancuernas de 15 kilos",
+    "price": "15000",
+    "stock": "15",
+    "category": "mancuernas",
+    "thumbnail": [
+      "1677759215949-Mancuernas1.jpg"
+    ],
+    "status": true,
+    "id": 4
+  },
+  {
+    "code": "5",
+    "title": "Mancuernas Gadnic Set x 2 Acero Macizo 35kg Total Trabas Regulables a Rosca",
+    "description": "Mancuernas de 35 kilos",
+    "price": "43000",
+    "stock": "25",
+    "category": "mancuernas",
+    "thumbnail": [
+      "1677759386454-mancuernas2.jpg"
+    ],
+    "status": true,
+    "id": 5
+  },
+  {
+    "code": "6",
+    "title": "Multivitaminico Animal Pak Polvo 44 Servicios Universal",
+    "description": "Suplemento dietario multivitaminico",
+    "price": "9500",
+    "stock": "55",
+    "category": "multivitaminicos",
+    "thumbnail": [
+      "1677759623879-multivit1.jpg"
+    ],
+    "status": true,
+    "id": 6
+  },
+  {
+    "code": "7",
+    "title": "MuscleTech Platinum Multivitaminico Formula Diaria Avanzada 90 Tabletas",
+    "description": "Suplemento dietario multivitaminico",
+    "price": "8500",
+    "stock": "15",
+    "category": "multivitaminicos",
+    "thumbnail": [
+      "1677759860567-multivit2.jpg"
+    ],
+    "status": true,
+    "id": 7
+  },
+  {
+    "code": "8",
+    "title": "Set x 10 Colchonetas Gimnasia Alta Densidad 1 x 50 x 5",
+    "description": "Set de colchonetas para hacer gimnasia",
+    "price": "11000",
+    "stock": "10",
+    "category": "accesorios",
+    "thumbnail": [
+      "1677760543048-colchoneta.webp"
+    ],
+    "status": true,
+    "id": 8
+  },
+  {
+    "code": "9",
+    "title": "Guantes para gym con muñequera",
+    "description": "Guantes para realizar ejercicios de fuerza",
+    "price": "10500",
+    "stock": "25",
+    "category": "accesorios",
+    "thumbnail": [
+      "1677760860980-guantesgym.webp"
+    ],
+    "status": true,
+    "id": 9
+  },
+  {
+    "code": "10",
+    "title": "20 kg / 30 kg / 40 kg / 50 kg / 60 kg / 70KG Barra Configurar la Intensidad de Peso Olímpico Barra Recta for Gym",
+    "description": "Barra olympica regulable ",
+    "price": "45000",
+    "stock": "12",
+    "category": "barras",
+    "thumbnail": [
+      "1677761133136-barra.jpg"
+    ],
+    "status": true,
+    "id": 10
   }
 ]
