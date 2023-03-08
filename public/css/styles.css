@@ -1,0 +1,149 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.container{
+    height: 100vh;
+    background-image: url(https://www.simplilearn.com/ice9/free_resources_article_thumb/How_to_Become_a_Back_End_Developer.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container h1,
+.container h2{
+    color: rgb(0, 0, 0);
+    text-shadow: 0 0 3px rgb(255, 255, 255);
+}
+
+.form{
+    background-color: rgba(240, 248, 255, 0.39);
+    margin-top: 50px;
+    
+    width: 30%;
+}
+
+.blur{ 
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    align-content: center; 
+    backdrop-filter: blur(2px);
+    border: thin solid rgba(0, 0, 0, 0.288);
+    padding: 30px 10px;
+}
+
+input[type="text"]{
+    width: 90%;
+    font-size: 20px;
+    padding: 5px;
+}
+
+input[type="submit"]{
+    text-align: center;
+    padding: 10px;
+    background-color: rgb(28, 55, 209);
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+input[type="submit"]:hover{
+    background-color: rgb(24, 177, 24);
+}
+
+
+/**Estilos handlebars*/
+.container-all{
+    background-color: rgb(220, 231, 241);
+    padding: 50px;
+    position: relative;
+}
+.nav-navbar{
+    background-color: aliceblue;
+}
+
+.ul-navbar{
+    background-color: rgb(57, 110, 255);
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 20px 5px;
+}
+
+.li-navbar a{
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-family: "Segoe UI", "Segoe WP", Arial, sans-serif;
+    cursor: pointer;
+}
+
+
+
+.h1-index-hbs{
+    color: rgb(255, 255, 255);
+    font-family: "Segoe UI", "Segoe WP", Arial, sans-serif;
+    text-shadow: 0 0 5px black;
+}
+
+
+
+.product-img{
+    width: 100%;
+    height: 200px;
+}
+
+.cards-container{
+    background-color: white;
+    margin-top: 100px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    padding: 50px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.521);
+}
+
+.card{
+    border: .3px solid rgba(0, 0, 0, 0.452);
+    padding: 20px;
+    width: 200px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.rtp-h2{
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+}

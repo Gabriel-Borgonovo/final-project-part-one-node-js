@@ -1,0 +1,21 @@
+{{>navbar}}
+
+
+<div class="container-all">
+  <h2 class="rtp-h2">Productos</h2>
+  <section class="cards-container">
+  {{#each products}}
+  <div class="card">
+    <img src="/img/{{thumbnail}}" alt="{{thumbnail}}" class="product-img"/>
+    <div class="card-body">
+      <h5 class="card-title">{{title}}</h5>
+      <p class="card-text">{{description}}</p>
+      <p class="card-price">${{price}}</p>
+    </div>
+  </div>
+  {{/each}}
+  </section>
+</div>
+
+
+   

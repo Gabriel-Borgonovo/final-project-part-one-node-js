@@ -128,5 +128,18 @@
     ],
     "status": true,
     "id": 10
+  },
+  {
+    "code": "11",
+    "title": "Barra de Proteina x 24",
+    "description": "Barra de Proteina caja sabor frutilla",
+    "price": "4500",
+    "stock": "25",
+    "category": "suplementos",
+    "thumbnail": [
+      "1678312912866-barra-proteina1.jpg"
+    ],
+    "status": true,
+    "id": 11
   }
 ]

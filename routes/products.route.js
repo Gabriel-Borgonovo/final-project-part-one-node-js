@@ -4,6 +4,7 @@ import ProductManager from '../data/productManager.js'
 const productManager = new ProductManager('./data/products.json');  
 import { validarProducto, validarProductoParcial } from '../data/validacion.js';
 import { avatarUploader } from "../utils/avatarUploader.js";
+import { socketServer } from "../socket/configure-socket.js";
 
 const route = Router();
 
@@ -52,7 +53,9 @@ route.get('/:pid', async (req, res) => {
 
     product.thumbnail = files; // Agregar la propiedad thumbnail al objeto product
     product.status = true;
-
+    
+    socketServer.emit('Product', product);//nuevo
+    
     const esValido = validarProducto(product);
 
     if (!esValido) {
@@ -107,6 +110,8 @@ route.delete('/:pid', async (req, res) => {
     res.status(404).send({ error: `Producto con id ${productId} no encontrado` });
     return;
   }
+  
+  socketServer.emit('Productdelete', productToDelete); // emitir el evento de socket
 
   await productManager.deleteProduct(productId);
 
