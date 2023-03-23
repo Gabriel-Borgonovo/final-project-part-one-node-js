@@ -1,7 +1,7 @@
 import { Router } from "express";
 import ProductManager from '../data/productManager.js';
 import { socketServer } from "../socket/configure-socket.js";
-const productManager = new ProductManager('./data/products.json');  
+const productManager = new ProductManager('./src/data/products.json');  
 
 const route = Router();
 

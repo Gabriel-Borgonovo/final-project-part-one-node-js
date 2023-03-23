@@ -1,7 +1,7 @@
 
 import { Router } from "express";
 import ProductManager from '../data/productManager.js'
-const productManager = new ProductManager('./data/products.json');  
+const productManager = new ProductManager('./src/data/products.json');  
 import { validarProducto, validarProductoParcial } from '../data/validacion.js';
 import { avatarUploader } from "../utils/avatarUploader.js";
 import { socketServer } from "../socket/configure-socket.js";
