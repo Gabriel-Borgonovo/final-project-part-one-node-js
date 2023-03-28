@@ -1,121 +1,115 @@
 
 import { Router } from "express";
-import ProductManager from '../data/productManager.js'
-const productManager = new ProductManager('./src/data/products.json');  
-import { validarProducto, validarProductoParcial } from '../data/validacion.js';
+import { ObjectId } from "mongodb";
+
 import { avatarUploader } from "../utils/avatarUploader.js";
 import { socketServer } from "../socket/configure-socket.js";
+import productsManager from "../dao/products.manager.js";
 
 const route = Router();
 
 
-route.get('/', async (req, res) => {
-
-    const query = req.query;
-    const entries = Object.entries(query);
-
-    const limit = parseInt(req.query.limit); // Obtener el valor del query param "limit"
-    const products = await productManager.getProducts();
-    
-    if (!Number.isNaN(limit)) { // Si se proporciona un límite
-        res.send(products.slice(0, limit)); // Devuelve los productos hasta el límite proporcionado
-      } else if(entries.length === 0){
-        //res.send(products); // Devuelve todos los productos
-
-          return res.send({productos: products});
-      
-      }
-
+route.get('/', async (req, res, next) => {
+  const {skip, limit, ...query} = req.query;
+  try {
+    const products = await productsManager.getAll(skip, limit, query);
+    res.send({ products });
+} catch (error) {
+    next(error);
+}
 }); 
 
-route.get('/:pid', async (req, res) => {
-    const productId = parseInt(req.params.pid); // Obtener el id del producto de los parámetros de la URL
-    const product = await productManager.getProductById(productId); // Obtener el producto por su id
-  
-    if (product) {
-      res.send(product); // Devuelve el producto solicitado
-    } else {
-      res.status(404).send('Producto no encontrado'); // Devuelve un error 404 si no se encuentra el producto
+route.get('/:pid', async (req, res, next) => {
+    const productId = req.params.pid; 
+    try {
+      const product = await productsManager.getProductById(productId);
+
+      if (product) {
+        res.send(product); 
+      } else {
+        res.status(404).send('Producto no encontrado'); 
+      }
+
+    } catch (error) {
+      next(error);
     }
+
   });
 
 
-  /**A partir de acá comienza lo nuevo */
-  /*********Agrega un nuevo producto**************** */
+  route.post('/', avatarUploader.array('thumbnail', 5), async(req, res, next) => {
 
-  route.post('/', avatarUploader.array('thumbnail', 5), async(req, res) => {
-    const product = req.body;
-    const files = req.files?.map(file => file.filename);
-    
-    if(!files){
-      return res.status(400).send({status: "error", error: "No se pudo cargar las imagenes"});
-    }
+    try {
+      const product = req.body;
+      const files = req.files?.map(file => file.filename);
 
-    product.thumbnail = files; // Agregar la propiedad thumbnail al objeto product
-    product.status = true;
-    
-    socketServer.emit('Product', product);//nuevo
-    
-    const esValido = validarProducto(product);
+      if(!files){
+        return res.status(400).send({status: "error", error: "No se pudo cargar las imagenes"});
+      }
 
-    if (!esValido) {
-      return res.status(400).json({ 
-        error: 'Los datos del producto son inválidos' 
-      });
-    }
+      product.thumbnail = files; 
+      product.status = true;
 
-    const id = await productManager.addProduct(product);
+      socketServer.emit('Product', product);
 
-    res.send({ok: true, mensaje: 'Producto agregado correctamente'})
+      const newProduct = await productsManager.addEntity(product);
+      res.send({ product: newProduct });
+    }catch (error) {
+      next(error);
+    }  
+
 });
 
 
 
 /***************modifica el producto************ */
 
-route.put('/:pid', async (req, res) => {
-  const idProduct = req.params.pid;
-
-  const nuevosDatos = req.body;
+route.put('/:pid', async (req, res, next) => {
   
-  const esValido = validarProducto(nuevosDatos);
+  try {
+    const idProduct = req.params.pid;
+    const nuevosDatos = req.body;
+    const productById = await productsManager.getProductById(idProduct);
 
-  if(!esValido){
-      res.status(400).send({
-          error: 'Datos inválidos',
-      });
-      return;
-  }
- 
-  const productById = await productManager.getProductById(idProduct, nuevosDatos);
-
-  if(!productById){
+    if(!productById){
       res.status(404).send({error: `Usuario con id ${idProduct} no encontrado`});
       return;
-  }
-  
-  await productManager.updateProduct(idProduct, nuevosDatos);
+      }
 
-  res.send({ok: true, mensaje: 'Producto actualizado correctamente'});
+    await productsManager.updateProduct(idProduct, nuevosDatos);
+
+    res.send({ok: true, mensaje: 'Producto actualizado correctamente'});
+
+  } catch (error) {
+    next(error);
+  }
+
 } );
 
 
 /**************Elimina el producto**************************** */
 
-route.delete('/:pid', async (req, res) => {
-  const productId = Number(req.params.pid);
-  const productToDelete = await productManager.getProductById(productId);
-  
-  if (productToDelete.length === 0) {
-    res.status(404).send({ error: `Producto con id ${productId} no encontrado` });
-    return;
+route.delete('/:pid', async (req, res, next) => {
+
+  try {
+    const productId = req.params.pid;
+    const productToDelete = await productsManager.getProductById(productId);
+    if (!productToDelete) {
+      res.status(404).send({ error: `Producto con id ${productId} no encontrado` });
+      return;
+    }
+   
+    //console.log(productToDelete);
+
+    // socketServer.emit('Productdelete', productToDelete);
+    await productsManager.deleteProduct(productId);
+    socketServer.emit('Productdelete', productToDelete);
+    
+    res.send({ ok: true, mensaje: `El producto con id ${productId} fue eliminado` });
+  } catch (error) {
+    next(error);
   }
-  
-  socketServer.emit('Productdelete', productToDelete); // emitir el evento de socket
 
-  await productManager.deleteProduct(productId);
-
-  res.send({ ok: true, mensaje: `El producto con id ${productId} fue eliminado` });
 });
 
 

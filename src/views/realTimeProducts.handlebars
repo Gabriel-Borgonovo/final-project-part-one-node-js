@@ -5,13 +5,13 @@
 
     <section class="cards-container">
         {{#each products}}
-        <div class="card" data-id="{{id}}" >
+        <div class="card" data-id="{{_id}}" >
         <img src="/img/{{thumbnail}}" alt="{{thumbnail}}" class="product-img"/>
         <div class="card-body">
             <h5 class="card-title">{{title}}</h5>
             <p class="card-text">{{description}}</p>
             <p class="card-price">${{price}}</p>
-            <p>id= {{id}}</p>
+            
         </div>
         </div>
         {{/each}}

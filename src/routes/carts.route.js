@@ -1,65 +1,69 @@
 import { Router } from "express";
-import CartManager from '../data/cartManager.js';
-const cartManager = new CartManager('./src/data/cart.json');
-
-import ProductManager from '../data/productManager.js'
-const productManager = new ProductManager('./src/data/products.json');  
+import productsManager from "../dao/products.manager.js";
+import cartsManager from "../dao/carts.manager.js";
 
 const route = Router();
 
-route.post('/', async (req, res) => {
+route.post('/', async (req, res, next) => {
     try {
-        await cartManager.createCart();
-        res.status(201).send({ ok: true, mensaje: 'Carrito creado con éxito' });
+      const newCart = await cartsManager.createCart();
+      console.log(newCart)
+      res.send({ cart: newCart });
     } catch (error) {
-        console.error(error);
-        res.status(500).send({ ok: false, mensaje: 'Error al crear el carrito' });
+      next(error);
     }
+
 });
 
-route.get('/:cid', async (req, res) => {
+route.get('/:cid', async (req, res, next) => {
     const cartId = req.params.cid;
 
   try {
-    const cart = await cartManager.getCartById(cartId);
+    const cart = await cartsManager.getCartById(cartId);
 
     if (cart.length === 0) {
       res.status(404).send({ error: `El Carrito con id ${cartId} no fue encontrado` });
       return;
     }
 
-    res.status(201).send(cart);
+    res.status(201).send({cart});
   } catch (err) {
-    console.error(err);
-    res.status(500).send({ error: 'No se pudo recuperar el carrito' });
+    next(err);
   }
 
 });
 
 
-route.post("/:cid/product/:pid", async (req, res) => {
+route.post("/:cid/product/:pid", async (req, res, next) => {
     const { cid, pid } = req.params;
     const quantity = req.body.quantity || 1;
 
-    const carts = await cartManager.getCarts();
+    try {
+      let cart = await cartsManager.getCartById(cid);
+      
+      // Buscar el producto por su pid
+      const product = await productsManager.getProductById(pid);
 
-    const cartExist = carts.find(c => c.id === cid);
-    if(!cartExist){
-        res.status(400).send({ ok: false, mensaje: 'El carrito no existe' });
-        return;
-    }
+      // Verificar si el producto ya existe en el carrito
+      const productIndex = cart.products.findIndex(
+        (p) => String(p.product._id) === pid
+      );
 
-    const pidNum = Number(pid);
+      if (productIndex === -1) {
+        // Si el producto no existe, agregarlo con una cantidad de 1
+        cart.products.push({ product: product._id, quantity: 1 });
+      } else {
+        // Si el producto ya existe, aumentar la cantidad
+        cart.products[productIndex].quantity += 1;
+      }
 
-    const products = await productManager.getProducts();
-    const productExist = products.find(p => p.id === pidNum);
+      // Guardar el carrito actualizado
+      await cartsManager.updateCart(cid, cart);
 
-    if(productExist){  
-        const cart = await cartManager.addProduct(cid, pid, quantity);
-        res.status(201).send({ ok: true, mensaje: "Producto agregado al carrito", cart: cart });   
-    } else{
-        res.status(404).send({ ok: false, mensaje: 'El producto no existe' });
-        return;
+      res.send({ cart: cart });
+
+    } catch (error) {
+      next(error)
     }
     
   });

@@ -1,12 +1,11 @@
 import { Router } from "express";
-import ProductManager from '../data/productManager.js';
 import { socketServer } from "../socket/configure-socket.js";
-const productManager = new ProductManager('./src/data/products.json');  
+import productsManager from "../dao/products.manager.js"; 
 
 const route = Router();
 
 route.get('/', async (req, res) => {
-    const products = await productManager.getProducts(); 
+    const products = await productsManager.getAll(); 
     res.render('index', {
         styles: 'styles',
         products,
@@ -14,10 +13,17 @@ route.get('/', async (req, res) => {
 });
 
 route.get('/realtimeproducts', async (req, res) => {
-    const products = await productManager.getProducts(); 
+    const products = await productsManager.getAll(); 
+
     res.render('realTimeProducts', {
         styles: 'styles',
         products,
+    });
+});
+
+route.get('/chat', async (req, res) => {
+    res.render('chat', {
+        styles: 'styles',
     });
 });
 

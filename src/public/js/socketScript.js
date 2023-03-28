@@ -22,15 +22,17 @@ socket.on('Product', (product) => {
 });
 
 socket.on('Productdelete', (productToDelete) => {
-        
-        console.log('producto eliminado via socket: ', productToDelete)
-        
-        const cards = document.querySelectorAll('.card');
-        console.log('cards: ', cards);
-        cards.forEach((card) => {
-          if (card.dataset.id === productToDelete.id) {
-                console.log('card: ', card);
-            card.remove();
-          }
-        });
+
+  const cards = document.querySelectorAll('.card');
+
+  console.log('_id', productToDelete._id)
+
+  cards.forEach((card) => {
+
+    console.log('card dataset id', card.dataset.id)
+
+    if (card.dataset.id === productToDelete._id) {
+      card.remove();
+    }
+  });
 });

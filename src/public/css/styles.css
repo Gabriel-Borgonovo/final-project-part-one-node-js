@@ -147,3 +147,111 @@ input[type="submit"]:hover{
     left: 50%;
     transform: translateX(-50%);
 }
+
+
+
+
+
+/**estilos al chat*/
+
+.h2-chat{
+    text-align: center;
+    margin: 20px;
+}
+
+.container-mensajes{
+    overflow-y: auto;
+    margin-top: 20px;
+    width: 90%;
+    max-width: 800px;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 50vh;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    border: .1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.p-mensajes-chat,
+.span-user,
+.span-message{
+    color: black;
+    font-family: monospace;
+    width: max-content;
+    margin-top: 5px;
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+.span-user{
+    background-color: yellow;
+}
+
+.span-message{
+    background-color: white;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container-btn-send-msg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.btn-send-msg{
+    text-align: center;
+    padding: 10px;
+    background-color: rgb(28, 55, 209);
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.btn-send-msg:hover{
+    background-color: crimson;
+}
+
+.form-input-chat{
+    width: 90%;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.connected{
+    background-color: rgb(187, 63, 63);
+}
+
+.input-chat{
+    border-radius: 5px;
+    border: .1px solid rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.form-email{
+    padding: 0; 
+}
+
+.h2-chat{
+    margin-top: 100px;
+}
+
+.input-email{
+    width: 80%;
+    max-width: 700px;
+    font-size: 16px;
+    padding: 10px 15px;
+}
