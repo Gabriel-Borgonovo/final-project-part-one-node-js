@@ -2,20 +2,130 @@
 
 
 <div class="container-all">
+  <div class="filters">
+  <div class="category-filters">
+    <p>Filtrar por categorías</p>
+    <div class="filters-container">
+      <button onclick="setCategory()" class="btn-category">Todos</button>
+      <button onclick="setCategory('proteinas')" class="btn-category">Proteinas</button>
+      <button onclick="setCategory('creatinas')" class="btn-category">Creatinas</button>
+      <button onclick="setCategory('multivitaminicos')" class="btn-category">Multivitaminicos</button>
+      <button onclick="setCategory('accesorios')" class="btn-category">Accesorios</button>
+      <button onclick="setCategory('barras')" class="btn-category">Barras</button>
+      <button onclick="setCategory('mancuernas')" class="btn-category">Mancuernas</button>
+    </div>
+  </div>
+
+
+<div class="cant-results">
+  <p>Filtrar por cantidad de resultados</p>
+  <div>
+  <button onclick="setLimit(10)" class="show-num">10</button>
+  <button onclick="setLimit(5)" class="show-num">5</button>
+  <button onclick="setLimit(3)" class="show-num">3</button>
+</div>
+</div>
+
+<div>
+  <p>Filtrar por el precio</p>
+  <button onclick="setPrice('desc')" class="btn-send-msg">Desc</button>
+  <button onclick="setPrice('asc')" class="btn-send-msg">Asc</button>
+</div>
+
+</div>
+
+
   <h2 class="rtp-h2">Productos</h2>
   <section class="cards-container">
   {{#each products}}
   <div class="card">
-    <img src="/img/{{thumbnail}}" alt="{{thumbnail}}" class="product-img"/>
+    {{#each thumbnail}}
+      <img src="/img/{{this}}" alt="{{this}}" class="product-img"/>
+    {{/each}}
     <div class="card-body">
       <h5 class="card-title">{{title}}</h5>
       <p class="card-text">{{description}}</p>
       <p class="card-price">${{price}}</p>
+      <p class="card-price">{{category}}</p>
     </div>
   </div>
   {{/each}}
   </section>
+
+  <div class="pagination-container">
+
+    <div id="btns-pages" class="btns-pages-container">
+      
+      {{#if hasPrevPage}}
+        <a href={{prevLink}} class="btn-send-msg btn-before" >Anterior</a>
+      {{/if}}
+
+      {{#if hasNextPage}}
+        <a href={{nextLink}} class="btn-send-msg btn-after">Siguiente</a>
+      {{/if}}
+    
+
+    </div>
+
+    
+  </div>
+  
 </div>
 
+<script>
+  const query = new URLSearchParams(window.location.search); //me devuelve lo que tengo en la url
+  const category = 'proteinas';
 
+
+  function setCategory(category = ''){
+      query.set('category', category);
+      query.set('page', 1);
+      query.set('limit', 3);
+      window.location.search = query.toString();
+    }
+
+  function setLimit(limit){
+    query.set('limit', limit);
+    query.set('page', 1);
+    window.location.search = query.toString();
+    }
+
+   
+/*Números para navegar a páginas determinadas**/
+  function setPaginate(page){
+    query.set('page', page);
+    window.location.search = query.toString();
+  }
+
+  function setPrice(order){
+    query.set('sort', order);
+    window.location.search = query.toString();
+  }
+
+    function renderButtonPage(){
+      const totalPages = {{totalPages}};
+      const currentPage = {{page}};
+      const btnsPages = document.getElementById("btns-pages");
+
+      console.log('total pages: ', totalPages);
+      console.log('página actual: ', currentPage);
+
+      for(let i = 1; i <= totalPages; i++){
+      const button = document.createElement('button');
+      button.innerText = i.toString();
+      button.onclick = function(){
+        setPaginate(i);
+      }
+      if(i === currentPage){
+        button.classList.add('active');
+      }
+      btnsPages.appendChild(button);
+    }
+
+    }
+
+     document.addEventListener('DOMContentLoaded', function(){
+      renderButtonPage()
+    });
+</script>
    

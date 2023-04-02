@@ -24,7 +24,7 @@ export default function configureSocket(httpServer){
 
 
         socket.on("history", async () => {
-            const messages = await messagesManager.getAll();
+            const messages = await messagesManager.getAll(0, 0);
             socket.emit("history", messages);
           });
 
