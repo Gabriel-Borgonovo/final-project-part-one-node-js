@@ -126,6 +126,15 @@
 
      document.addEventListener('DOMContentLoaded', function(){
       renderButtonPage()
+
+      const currentPage = parseInt(query.get('page'));
+      const totalPages = {{totalPages}};
+      if (currentPage > totalPages || currentPage <= 0) {
+        // redirigir a productos
+          alert('Página inexistente');
+          window.location.href = `/products?page=1&limit=10`;
+          
+        }
     });
 
 
