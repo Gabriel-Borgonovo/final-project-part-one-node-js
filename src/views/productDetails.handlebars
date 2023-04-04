@@ -1,0 +1,27 @@
+{{>navbar}}
+
+<div class="product-details">
+   <h1 class="product-d-h1">Producto</h1>
+
+<section class="product-d-section">
+  {{#each thumbnail}}
+      <img src="/img/{{this}}" alt="{{this}}" class="product-d-img"/>
+  {{/each}}
+  <div class="product-d-cont-texts">
+    <div class="prod-d-texts">
+      <h2>{{title}}</h2>
+      <p>{{description}}</p>
+      <p>Categoria: <b>{{category}}</b></p>
+      <p>Stock: <b>{{stock}}</b></p>
+      <h3>${{price}}</h3>
+    </div>
+    <button class="btn-send-msg btn-add-cart">ir al carrito</button>
+  </div>
+  
+</section>
+    
+</div> 
+
+<script>
+  
+</script>

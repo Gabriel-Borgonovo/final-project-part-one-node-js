@@ -113,9 +113,8 @@ input[type="submit"]:hover{
 }
 
 .cards-container{
-    background-color: white;
     margin-top: 30px;
-    width: 80%;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -124,18 +123,27 @@ input[type="submit"]:hover{
     align-items: center;
     gap: 25px;
     padding: 50px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.221);
 }
 
 .card{
-    border: .3px solid rgba(0, 0, 0, 0.452);
+    background-color: #fff;
+    border: .3px solid rgba(0, 0, 0, 0.152);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.212);
     padding: 20px;
     width: 200px;
     height: 350px;
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: baseline;
     justify-content: center;
+    transition: all .3s ease;
+}
+
+.card:hover{
+    transform: scale(1.05);
+    border-color: rgb(57, 110, 255);
 }
 
 .rtp-h2{
@@ -381,4 +389,97 @@ button.active{
 .btn-after{
     text-decoration: none;
     order: 1;
+}
+
+
+/*home styles*/
+
+.home{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.home-btn{
+    text-decoration: none;
+}
+
+
+/*product Details styles*/
+.product-d-h1{
+    text-align: center;
+    font-family: "Segoe UI", "Segoe WP", Arial, sans-serif;
+}
+
+.product-details{
+    background: none;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-d-section{
+    margin-top: 25px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
+}
+
+.product-d-img{
+    width: 40%;
+    height: 350px;
+}
+
+.product-d-cont-texts{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+.prod-d-texts{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+/*Cart styles*/
+
+.img-cart{
+    width: 100px;
+    height: 100px;
+}
+
+.cart-table{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* .cart-thead{
+    border: 1px solid black;
+}
+
+.cart-tr{
+    border: 1px solid black;
+} */
+
+.cart-th{
+    border: 1px solid rgba(0, 0, 0, 0.13);
+    padding: 5px;
+}
+
+.cart-tr{
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.233);
 }

@@ -1,0 +1,41 @@
+{{>navbar}}
+
+<div class="product-details">
+   <h1 class="product-d-h1">Cart</h1>
+
+    <table class="cart-table">
+        <thead class="cart-thead">
+            <tr class="cart-tr">
+                <th class="cart-th">imagen</th>
+                <th class="cart-th">Producto</th>
+                <th class="cart-th">Cantidad</th>
+                <th class="cart-th">Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#if products}}
+            {{#each products}}
+            <tr class="cart-tr">
+                {{#each this.img}}
+                <td><img src="/img/{{this}}" alt="{{this}}" class="img-cart"></td>
+                {{/each}}
+                <td>{{this.title}}</td>
+                <td>{{this.quantity}}</td>
+                <td>{{this.price}}</td>
+            </tr>
+            {{/each}}
+
+            {{else}}
+                <tr>
+                    <td>El carrito está vacio</td>
+                </tr>
+            {{/if}}
+            
+        </tbody>
+    </table>
+
+  
+  
+</section>
+    
+</div> 

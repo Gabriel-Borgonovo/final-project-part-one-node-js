@@ -2,15 +2,22 @@ import { Router } from "express";
 import { socketServer } from "../socket/configure-socket.js";
 import productsManager from "../dao/products.manager.js"; 
 import productsModel from "../dao/models/products.model.js";
+import cartsManager from '../dao/carts.manager.js';
 
 const route = Router();
 
 route.get('/', async (req, res) => {
+    res.render('index', { 
+        styles: 'styles', 
+    });
+});
+
+route.get('/products', async (req, res) => {
     try{
 
         const query = req.query;
         // console.log(query)
-        const limit = parseInt(query.limit) || 3;
+        const limit = parseInt(query.limit) || 10;
         const page = parseInt(query.page) || 1;
         const sort = query.sort === 'asc' ? { price: 1 } : query.sort === 'desc' ? { price: -1 } : {};
         const category = req.query.category;
@@ -30,14 +37,14 @@ route.get('/', async (req, res) => {
         );
 
         const prevLink = products.hasPrevPage 
-            ? `/?page=${products.prevPage}&limit=${products.limit}${query.query ? `&query=${query.query}` : ''}${query.sort ? `&sort=${query.sort}` : ''}` 
+            ? `/products/?page=${products.prevPage}&limit=${products.limit}${query.query ? `&query=${query.query}` : ''}${query.sort ? `&sort=${query.sort}` : ''}` 
             : null;
         
         const nextLink = products.hasNextPage 
-            ? `/?page=${products.nextPage}&limit=${products.limit}${query.query ? `&query=${query.query}` : ''}${query.sort ? `&sort=${query.sort}` : ''}` 
+            ? `/products/?page=${products.nextPage}&limit=${products.limit}${query.query ? `&query=${query.query}` : ''}${query.sort ? `&sort=${query.sort}` : ''}` 
             : null;
 
-        res.render('index', {
+        res.render('products', {
             styles: 'styles',
             status: '200',
             products: products.docs, //payload
@@ -73,6 +80,53 @@ route.get('/chat', async (req, res) => {
         styles: 'styles',
     });
 });
+
+/***vista de producto seleccionado por id */
+
+route.get('/products/:id', async (req, res, next) => {
+    const id = req.params.id;
+    try {
+      const product = await productsManager.getProductById(id);
+      res.render('productDetails', { 
+        styles: 'styles',
+        title: product.title,
+        thumbnail: product.thumbnail,
+        description: product.description,
+        price: product.price,
+        stock: product.stock,
+        category: product.category,
+    });
+    } catch (error) {
+      next(error);
+    }
+  });
+
+
+  /***vista de carrito seleccionado por id */
+
+route.get('/carts/:id', async (req, res, next) => {
+    const id = req.params.id;
+    try {
+        const cart = await cartsManager.getCartById(id);
+        const products = cart.products.map((product) => {
+            return {
+                img: product.product.thumbnail,
+                title: product.product.title,
+                price: product.product.price,
+                quantity: product.quantity
+            };
+        });
+
+        console.log(products)
+        
+        res.render('cart', { 
+          styles: 'styles',
+          products,
+      });
+    } catch (error) {
+      next(error);
+    }
+  });
 
 
 export default route;
