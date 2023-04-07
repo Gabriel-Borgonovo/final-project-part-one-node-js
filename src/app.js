@@ -2,7 +2,8 @@ import express from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import productsRoute from './routes/products.route.js'; 
-import cartsRoute from './routes/carts.route.js'
+import cartsRoute from './routes/carts.route.js';
+import usersRoute from './routes/users.route.js';
 import fileDirName from './utils/fileDirName.js';
 import { uploader } from './utils/uploader.js';
 import viewsRoute from './routes/views.route.js';//nuevo
@@ -60,6 +61,7 @@ app.use(express.static(__dirname + '/public')); //Esa linea de código es para m
 app.use('/', viewsRoute); //nuevo
 app.use('/api/products', productsRoute);
 app.use('/api/carts', cartsRoute);
+app.use('/api/users', usersRoute);
 
 
 

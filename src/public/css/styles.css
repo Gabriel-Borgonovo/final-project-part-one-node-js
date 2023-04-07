@@ -7,7 +7,6 @@
 
 .container{
     height: 100vh;
-    background-image: url(https://www.simplilearn.com/ice9/free_resources_article_thumb/How_to_Become_a_Back_End_Developer.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -24,15 +23,19 @@
 }
 
 .form{
-    background-color: rgba(240, 248, 255, 0.39);
+    background: rgb(108,3,67);
+    background: linear-gradient(0deg, rgba(108,3,67,1) 0%, rgba(4,6,80,1) 100%);
     margin-top: 50px;
-    
-    width: 30%;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.452);
 }
 
 .blur{ 
     display: flex;
     flex-direction: column;
+    border-radius: 15px;
     gap: 10px;
     align-items: center;
     justify-content: center;
@@ -42,16 +45,30 @@
     padding: 30px 10px;
 }
 
+input[type="password"],
+input[type="number"],
 input[type="text"]{
-    width: 90%;
-    font-size: 20px;
+    color: #fff;
+    width: 80%;
+    font-size: 18px;
+    font-family: "Segoe UI", "Segoe WP", Arial, sans-serif;
     padding: 5px;
+    border-radius: 7px;
+    background-color: #00000088;
+}
+
+input[type="password"]::placeholder,
+input[type="number"]::placeholder,
+input[type="text"]::placeholder{
+    font-family: "Segoe UI", "Segoe WP", Arial, sans-serif;
+    color: #ffffff48;
 }
 
 input[type="submit"]{
     text-align: center;
     padding: 10px;
-    background-color: rgb(28, 55, 209);
+    background-color: #1f054c;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.618);
     border: none;
     color: white;
     font-size: 16px;
@@ -62,7 +79,8 @@ input[type="submit"]{
 }
 
 input[type="submit"]:hover{
-    background-color: rgb(24, 177, 24);
+    background-color: rgba(4,6,80,1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.418);
 }
 
 
