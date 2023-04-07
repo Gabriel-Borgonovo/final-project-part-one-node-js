@@ -129,4 +129,18 @@ route.get('/carts/:id', async (req, res, next) => {
   });
 
 
+
+  /**sistema de login */
+
+  route.get('/register', (req, res) => {
+    const email = req.session.user;
+
+    if(email){
+        return res.redirect('/perfil')
+    }
+    
+    res.render('register', {styles: 'styles'});
+});
+
+
 export default route;

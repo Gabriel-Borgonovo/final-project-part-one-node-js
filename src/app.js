@@ -1,4 +1,6 @@
 import express from 'express';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
 import productsRoute from './routes/products.route.js'; 
 import cartsRoute from './routes/carts.route.js'
 import fileDirName from './utils/fileDirName.js';
@@ -8,9 +10,10 @@ import configureHandlebars from './lib/hbs.middleware.js'; //nuevo
 import configureSocket from './socket/configure-socket.js'; //nuevo
 import mongoose from 'mongoose';
 import datosConection from '../data.js';
+import MongoStore from 'connect-mongo';
 const {__dirname} = fileDirName(import.meta);
 
-const {PORT, MONGO_URL} = datosConection
+const {PORT, MONGO_URL, cookie_secret} = datosConection
 
 const app = express();
 
@@ -24,6 +27,28 @@ const connection = mongoose.connect(
     },
 );
 
+/**Cookie parser middleware de tercero */
+
+app.use(cookieParser(cookie_secret));
+
+/**************************************** */
+
+/**session */
+app.use(session({
+	store: MongoStore.create({
+	    mongoUrl: MONGO_URL,
+		mongoOptions: {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+		},
+		ttl: 15,
+	}),
+	secret: cookie_secret,
+	resave: true,
+	saveUninitialized: true,
+})
+);
+/****************************** */
 
 configureHandlebars(app);
 
@@ -35,6 +60,29 @@ app.use(express.static(__dirname + '/public')); //Esa linea de código es para m
 app.use('/', viewsRoute); //nuevo
 app.use('/api/products', productsRoute);
 app.use('/api/carts', cartsRoute);
+
+
+
+
+
+
+/**prueba de session */
+
+app.get('/session', (req, res) => {
+	if(req.session.counter){
+		req.session.counter++;
+		res.send({counter: req.session.counter});
+	}else{
+		req.session.counter = 1;
+		res.send({counter: req.session.counter, primeraVez: true});
+	}
+});
+
+
+/************************* */
+
+
+
 
 
 /**Manejo de errores, middleware */
