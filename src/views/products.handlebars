@@ -1,11 +1,13 @@
-{{>navbar}}
-
 
 <div class="container-all">
-  <div class="filters">
+  {{>navbar}}
+  <aside class="filters">
+
   <div class="category-filters">
-    <p>Filtrar por categorías</p>
+    
+    <p class="filter-p">Categorías</p>
     <div class="filters-container">
+      
       <button onclick="setCategory()" class="btn-category">Todos</button>
       <button onclick="setCategory('proteinas')" class="btn-category">Proteinas</button>
       <button onclick="setCategory('creatinas')" class="btn-category">Creatinas</button>
@@ -18,25 +20,31 @@
 
 
 <div class="cant-results">
-  <p>Filtrar por cantidad de resultados</p>
-  <div>
+  <p>Resultados</p>
+  <div class="number-result">
   <button onclick="setLimit(10)" class="show-num">10</button>
   <button onclick="setLimit(5)" class="show-num">5</button>
   <button onclick="setLimit(3)" class="show-num">3</button>
 </div>
 </div>
 
-<div>
-  <p>Filtrar por el precio</p>
+<div class="price-results">
+  <p>Precio</p>
   <button onclick="setPrice('desc')" class="btn-send-msg">Desc</button>
   <button onclick="setPrice('asc')" class="btn-send-msg">Asc</button>
 </div>
 
+<div class="logout">
+  <p class="user-mail">{{email}}</p>
+  <button class="btn-logout" onclick="logout()">Logout</button>
 </div>
 
+</aside>
 
-  <h2 class="rtp-h2">Productos</h2>
+
+  <h2 class="prod-h2">Hey <b>{{name}}</b> rol: {{rol}}!!! Conoce nuestros productos</h2>
   <section class="cards-container">
+  
   {{#each products}}
   <div class="card" onclick="goDetails('{{_id}}')">
     {{#each thumbnail}}
@@ -69,10 +77,13 @@
 
     
   </div>
-  
+  {{>footer}}
 </div>
 
+
+<script src="./js/api.js"></script>
 <script>
+  //import api from '../public/js/api.js';
   const query = new URLSearchParams(window.location.search); //me devuelve lo que tengo en la url
   const category = 'proteinas';
 
@@ -143,6 +154,16 @@
     function goDetails(id) {
       const url = "/products/" + id;
       window.location.href = url;
+}
+
+
+
+
+
+function logout() {
+  
+  api.post('/api/auth/logout');
+  
 }
 </script>
    

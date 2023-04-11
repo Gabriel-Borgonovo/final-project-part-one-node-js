@@ -3,6 +3,7 @@ import { socketServer } from "../socket/configure-socket.js";
 import productsManager from "../dao/products.manager.js"; 
 import productsModel from "../dao/models/products.model.js";
 import cartsManager from '../dao/carts.manager.js';
+import { authenticated } from "../utils/auth.js";
 
 const route = Router();
 
@@ -12,8 +13,10 @@ route.get('/', async (req, res) => {
     });
 });
 
-route.get('/products', async (req, res) => {
+route.get('/products', authenticated, async (req, res) => {
     try{
+        const user = req.user;
+        const rol = req.session.rol;
 
         const query = req.query;
         // console.log(query)
@@ -56,6 +59,10 @@ route.get('/products', async (req, res) => {
             hasNextPage: products.hasNextPage,
             prevLink,
             nextLink,
+            name: user.nombre,
+            lastName: user.apellido,
+            email: user.email,
+            rol,
         });
 
     }catch(error){
@@ -83,7 +90,10 @@ route.get('/chat', async (req, res) => {
 
 /***vista de producto seleccionado por id */
 
-route.get('/products/:id', async (req, res, next) => {
+route.get('/products/:id', authenticated , async (req, res, next) => {
+    const user = req.user;
+    
+
     const id = req.params.id;
     try {
       const product = await productsManager.getProductById(id);
@@ -95,6 +105,8 @@ route.get('/products/:id', async (req, res, next) => {
         price: product.price,
         stock: product.stock,
         category: product.category,
+        name: user.nombre,
+        lastName: user.apellido,
     });
     } catch (error) {
       next(error);
@@ -136,10 +148,22 @@ route.get('/carts/:id', async (req, res, next) => {
     const email = req.session.user;
 
     if(email){
-        return res.redirect('/perfil')
+        return res.redirect('/products')
     }
     
     res.render('register', {styles: 'styles'});
+});
+
+route.get('/login', (req, res) => {
+    const email = req.session.user;
+
+    if(email){
+        return res.redirect('/products')
+    }
+
+    res.render('login', {
+        styles: 'styles', 
+    });
 });
 
 

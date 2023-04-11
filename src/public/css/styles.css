@@ -5,10 +5,48 @@
     font-family: sans-serif;
 }
 
+.container-all{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    position: relative;
+    grid-template-areas: "nav nav nav nav nav"
+                         "aside title title title title"
+                         "aside cards cards cards cards"
+                         "aside paginate paginate paginate paginate"
+                         "footer footer footer footer footer";
+}
+
+.navbar-grid{
+    grid-area: nav;
+}
+
+.filters{
+    grid-area: aside;
+}
+
+.cards-container{
+    grid-area: cards;
+}
+
+.pagination-container{
+    grid-area: paginate;
+}
+
+.footer{
+    grid-area: footer;
+}
+
+.prod-h2{
+    grid-area: title;
+}
+
+
+
 .container{
     height: 100vh;
     background-repeat: no-repeat;
     background-position: center;
+    background-color: #dce7f1;
     background-size: cover;
     display: flex;
     flex-direction: column;
@@ -23,13 +61,23 @@
 }
 
 .form{
-    background: rgb(108,3,67);
-    background: linear-gradient(0deg, rgba(108,3,67,1) 0%, rgba(4,6,80,1) 100%);
-    margin-top: 50px;
-    width: 90%;
+    background: rgb(218,221,231);
+    background: linear-gradient(0deg, rgba(218,221,231,1) 0%, rgba(57,110,255,1) 100%); width: 90%;
     max-width: 400px;
     border-radius: 15px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.452);
+}
+
+.link-register{
+    text-decoration: none;
+    color: blue;
+    transition: all .3s ease;
+    font-weight: 500;
+    font-family: "Segoe UI", "Segoe WP", Arial, sans-serif;
+}
+
+.link-register:hover{
+    color: #000000;
 }
 
 .blur{ 
@@ -48,26 +96,29 @@
 input[type="password"],
 input[type="number"],
 input[type="text"]{
-    color: #fff;
+    color: #000000d3;
     width: 80%;
     font-size: 18px;
+    font-weight: 600;
     font-family: "Segoe UI", "Segoe WP", Arial, sans-serif;
     padding: 5px;
+    border: none;
+    outline: none;
     border-radius: 7px;
-    background-color: #00000088;
+    background-color: rgb(255, 255, 255);
 }
 
 input[type="password"]::placeholder,
 input[type="number"]::placeholder,
 input[type="text"]::placeholder{
     font-family: "Segoe UI", "Segoe WP", Arial, sans-serif;
-    color: #ffffff48;
+    color: #5a5a5ace;
 }
 
 input[type="submit"]{
     text-align: center;
     padding: 10px;
-    background-color: #1f054c;
+    background-color: rgb(57, 110, 255);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.618);
     border: none;
     color: white;
@@ -79,27 +130,40 @@ input[type="submit"]{
 }
 
 input[type="submit"]:hover{
-    background-color: rgba(4,6,80,1);
+    background-color: crimson;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.418);
 }
 
 
 /**Estilos handlebars*/
-.container-all{
-    background-color: rgb(220, 231, 241);
-    padding: 50px;
-    position: relative;
-}
-.nav-navbar{
-    background-color: aliceblue;
+.user-img{
+    width: 30px;
+    height: 30px;
 }
 
-.ul-navbar{
-    background-color: rgb(57, 110, 255);
+.new-user{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.user-name{
+    color: #fff;
+    font-family: "Segoe UI", "Segoe WP", Arial, sans-serif;
+    font-weight: 600;
+}
+
+.nav-navbar{
+   width: 100%;
+    display: flex;
+    justify-content: space-around;
     position: fixed;
     top: 0;
     z-index: 9999;
-    width: 100%;
+    background-color: rgb(57, 110, 255);
+}
+
+.ul-navbar{
     list-style: none;
     display: flex;
     justify-content: center;
@@ -123,6 +187,18 @@ input[type="submit"]:hover{
     text-shadow: 0 0 5px black;
 }
 
+.prod-h2{
+    margin-top: 70px;
+    font-weight: 500;
+    font-size: 20px;
+    padding: 20px;
+    text-align: center;
+    color: rgb(48, 47, 51);
+}
+
+.prod-h2 b{
+    color: rgb(57, 110, 255);
+}
 
 
 .product-img{
@@ -131,8 +207,7 @@ input[type="submit"]:hover{
 }
 
 .cards-container{
-    margin-top: 30px;
-    width: 90%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -140,7 +215,7 @@ input[type="submit"]:hover{
     justify-content: center;
     align-items: center;
     gap: 25px;
-    padding: 50px;
+    padding: 10px;
 }
 
 .card{
@@ -290,17 +365,37 @@ input[type="submit"]:hover{
     background-color: blueviolet;
 }
 
+.price-results,
+.cant-results,
 .category-filters{
-    width: 35%;
+    background-color: #ffffff;
+    padding: 20px 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.222);
 }
 
+.category-filters{
+    width: 100%;
+}
+
+/**aside*/
 .filters{
-    margin-top: 100px;
+    margin-top: 50px;
+    position: relative;
+    padding: 25px 20px;
+    background-color: rgb(28, 29, 34);
     display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 30px;
+    min-height: 800px;
+    max-height: 1000px;
+}
+
+.filter-p{
+    width: 100%;
 }
 
 .filters-container{
@@ -308,11 +403,12 @@ input[type="submit"]:hover{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: stretch;
     flex-wrap: wrap;
-    height: 15vh;
-    width: 100%;
+    
 }
+
+
 
 .btn-category{
     font-family: "Segoe UI", "Segoe WP", Arial, sans-serif;
@@ -338,8 +434,19 @@ input[type="submit"]:hover{
 .cant-results{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: 100%;
+}
+
+.number-result{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.price-results{
+    width: 100%;
 }
 
 .show-num{
@@ -359,6 +466,35 @@ input[type="submit"]:hover{
     background-color: rgb(28, 55, 209);
     color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.658);
+}
+
+.user-mail{
+    font-size: 12px;
+    color: #fff;
+}
+
+.logout{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    bottom: 20px;
+    background-color: rgb(28, 29, 34);
+}
+
+.btn-logout{
+    padding: 10px 25px;
+    background-color: crimson;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color .3s ease;
+}
+
+.btn-logout:hover{
+    background-color: #ad0026;
+    outline: 1px solid #fff;
 }
 
 
@@ -500,4 +636,18 @@ button.active{
 .cart-tr{
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.233);
+}
+
+
+
+/*footer styles**/
+
+.footer{
+    background-color: rgb(28, 29, 34);
+    color: #fff;
+    padding: 50px;
+}
+
+.footer-h2{
+    text-align: center;
 }

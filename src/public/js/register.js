@@ -15,6 +15,15 @@ async function send(event){
         email,
         edad,
         password,
-    }).then((d) => alert('Usuario Registrado'));
+    }).then((d) => {
+        alert('Usuario Registrado');
+        document.getElementById('form-name').value = '';
+        document.getElementById('form-lastName').value = '';
+        document.getElementById('form-email').value = '';
+        document.getElementById('form-age').value = '';
+        document.getElementById('form-password').value = '';
+
+        window.location.href = '/login';
+    });
 
 }

@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import productsRoute from './routes/products.route.js'; 
 import cartsRoute from './routes/carts.route.js';
 import usersRoute from './routes/users.route.js';
+import authRoute from './routes/auth.route.js';
 import fileDirName from './utils/fileDirName.js';
 import { uploader } from './utils/uploader.js';
 import viewsRoute from './routes/views.route.js';//nuevo
@@ -42,7 +43,7 @@ app.use(session({
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 		},
-		ttl: 15,
+		ttl: 120,
 	}),
 	secret: cookie_secret,
 	resave: true,
@@ -62,7 +63,7 @@ app.use('/', viewsRoute); //nuevo
 app.use('/api/products', productsRoute);
 app.use('/api/carts', cartsRoute);
 app.use('/api/users', usersRoute);
-
+app.use('/api/auth', authRoute);
 
 
 
