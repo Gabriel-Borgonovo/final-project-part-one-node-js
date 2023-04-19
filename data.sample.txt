@@ -1,0 +1,8 @@
+const datosConection = {
+    PORT: Number,
+    MONGO_URL: String
+    cookie_secret: String,
+    github_client_id: String,
+    github_client_secret: String,
+    github_callback_url: 'http://localhost:8080/api/auth/github-callback',
+    };

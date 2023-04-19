@@ -13,6 +13,9 @@ import configureSocket from './socket/configure-socket.js'; //nuevo
 import mongoose from 'mongoose';
 import datosConection from '../data.js';
 import MongoStore from 'connect-mongo';
+import { configurePassport } from './config/passport.config.js';
+import passport from 'passport';
+
 const {__dirname} = fileDirName(import.meta);
 
 const {PORT, MONGO_URL, cookie_secret} = datosConection
@@ -50,6 +53,13 @@ app.use(session({
 	saveUninitialized: true,
 })
 );
+
+
+configurePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 /****************************** */
 
 configureHandlebars(app);

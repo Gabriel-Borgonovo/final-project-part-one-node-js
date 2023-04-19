@@ -9,7 +9,7 @@ async function send(event){
     const password = document.getElementById('form-password').value;
 
 
-    api.post('/api/users', {
+    api.post('/api/auth/register', {
         nombre,
         apellido,
         email,
@@ -17,11 +17,11 @@ async function send(event){
         password,
     }).then((d) => {
         alert('Usuario Registrado');
-        document.getElementById('form-name').value = '';
-        document.getElementById('form-lastName').value = '';
-        document.getElementById('form-email').value = '';
-        document.getElementById('form-age').value = '';
-        document.getElementById('form-password').value = '';
+        // document.getElementById('form-name').value = '';
+        // document.getElementById('form-lastName').value = '';
+        // document.getElementById('form-email').value = '';
+        // document.getElementById('form-age').value = '';
+        // document.getElementById('form-password').value = '';
 
         window.location.href = '/login';
     });

@@ -638,6 +638,29 @@ button.active{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.233);
 }
 
+/*Boton de autenticación por github*/
+.btn_github{
+    color: #fff;
+    background-color: black;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    transition: all .3s ease;
+}
+
+.btn_github i{
+    font-size: 25px;
+}
+
+.btn_github:hover{
+    background-color: rgb(187, 10, 10);
+}
+
 
 
 /*footer styles**/
