@@ -11,7 +11,9 @@ export default function configureHandlebars(app){
 
     const hbs = create({
         partialsDir: [partialsDir],
-        //helpers,
+        helpers: {
+            urlEncode: (str) => encodeURIComponent(JSON.stringify(str)),
+          },
     });
 
     app.engine('handlebars', hbs.engine);

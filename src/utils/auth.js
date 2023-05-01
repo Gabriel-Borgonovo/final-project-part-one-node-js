@@ -16,19 +16,6 @@ export const authenticated = async (req, res, next) => {
 
 
 
-// const setRol = (rol) => {
-// 	return async (req, res, next) => {
-// 	  const user = req.user;
-// 	  if (!user) {
-// 		return res.status(401).send({ error: 'No autorizado' });
-// 	  } else {
-// 		if (user.rol === rol) { // aquí también debe ser req.rol
-// 		  next();
-// 		} else {
-// 		  return res.status(401).send({ error: 'No autorizado' });
-// 		}
-// 	  }
-// 	};
-//   };
+
 
 

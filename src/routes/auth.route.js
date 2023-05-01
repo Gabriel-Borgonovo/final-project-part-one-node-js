@@ -2,48 +2,47 @@ import { Router } from "express";
 import { usersModel } from "../dao/models/users.model.js";
 import { createHash, isValidPassword } from "../utils/crypto.js";
 import passport from "passport";
+import { generateToken } from "../config/helpers/jwt.utils.js";
 
 import { authenticated } from "../utils/auth.js";
 
 
 const route = Router();
 
-// route.post('/login', async (req, res) => {
-//     const alreadyEmail = req.session.user;
 
-//     if(alreadyEmail){
-//         return res.redirect('/products')
-//     }
+route.post('/login', async (req, res, next) => {
 
-//     const {email, password} = req.body;
-//     const user = await usersModel.findOne({email, password});
-//     if(!user){
-//         return res.status(401).send({
-//             error: 'Email o contraseña incorrectos'
-//         });
-//     }
-
-//     let rol = 'usuario';
-//     if(email === 'adminCoder@coder.com' && password === 'adminCod3r123'){
-//         rol = 'admin';
-//     }
-
-//     req.session.user = email;
-//     req.session.rol = rol;
-//     res.redirect('/products');
-// });
-
-route.post(
-    "/login",
-    passport.authenticate("login", {
-      failureRedirect: "/api/auth/failurelogin",
-    }),
-    async (req, res) => {
-      
-      req.session.user = req.user.email;
-      res.redirect("/products");
+  try {
+    const user = await usersModel.findOne({email: req.body.email});
+    if (!user) {
+      return res.status(401).json({ error: "Usuario o contraseña incorrectos" });
     }
-);
+    //console.log(user);
+
+    const userToToken = {
+      nombre: user.nombre,
+      apellido: user.apellido,
+      email: user.email,
+      edad: user.edad,
+      role: user.role,
+      //cart: user.cart
+    }
+    
+
+    const token = generateToken(userToToken);
+
+    res.cookie('token', token, { 
+      maxAge: 60*60*1000*24, 
+      httpOnly: true 
+      });//envia la cookie
+    
+    res.header({token:token});
+    res.redirect('/products');
+  } catch (error) {
+    next(error);
+  }
+  
+});
 
 route.get('/failurelogin', (req, res) => {
     res.send({ error: 'Usuario o contraseña incorrectos' });

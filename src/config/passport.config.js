@@ -4,12 +4,16 @@ import { usersModel } from "../dao/models/users.model.js";
 import { createHash, isValidPassword } from "../utils/crypto.js";
 import github from 'passport-github2';
 import datosConection from '../../data.js';
+import { jwtStrategy } from "./strategies/jwt.strategy.js";
+import cartsManager from '../dao/carts.manager.js';
 
 const LocalStrategy = local.Strategy;
 const GithubStrategy = github.Strategy;
 
 
 export function configurePassport() {
+
+  /**register */
   passport.use(
     "register",
     new LocalStrategy(
@@ -19,7 +23,7 @@ export function configurePassport() {
       },
       async (req, username, password, done) => {
         try {
-          const { edad, apellido, nombre } = req.body;
+          const { edad, apellido, nombre, cart } = req.body;
           const userExists = await usersModel.findOne({ email: username });
 
           if (userExists) {
@@ -32,6 +36,7 @@ export function configurePassport() {
             apellido,
             email: username,
             password: createHash(password),
+            cart: await cartsManager.createCart()
           });
           return done(null, newUser);
         } catch (error) {
@@ -41,6 +46,7 @@ export function configurePassport() {
     )
   );
 
+  /**local */
   passport.use(
     "login",
     new LocalStrategy(
@@ -106,6 +112,11 @@ export function configurePassport() {
     })
     
   );
+
+
+  /**jwt */
+
+  jwtStrategy();
 
 
 

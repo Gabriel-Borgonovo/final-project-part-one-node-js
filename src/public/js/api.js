@@ -1,4 +1,4 @@
-const api = {
+api = {
     post: async (url, body) => {
         const response = await fetch(url, {
             method: 'POST',

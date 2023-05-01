@@ -671,6 +671,48 @@ button.active{
     padding: 50px;
 }
 
+
+
+
+.cart-icon{
+    background-color: #ffffff75;
+    box-shadow: 0 0 3px black;
+    border-radius: 50%;
+    padding: 7px;
+    position: fixed;
+    right: 2%;
+    top: 10px;
+    z-index: 9999999999;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.cart-icon:hover{
+    background-color: #fff;
+    transform: scale(1.1);
+}
+
+
+
+.cart-icon i{
+    font-size: 25px;
+    color: #00000096;
+    transition: all .2s ease;
+}
+
+.cart-icon i:hover{
+    color: #000000;
+}
+
+.container-go-products{
+    text-align: center;
+    margin-top: 50px;
+}
+
+.btn-go-products{
+    text-decoration: none;
+}
+
 .footer-h2{
     text-align: center;
 }

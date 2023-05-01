@@ -42,9 +42,15 @@
 </aside>
 
 
-  <h2 class="prod-h2">Hey <b>{{name}}</b> rol: {{rol}}!!! Conoce nuestros productos</h2>
-  <section class="cards-container">
+  <h2 class="prod-h2">Hey <b>{{name}}</b> rol: <b>{{role}}</b>!!! Conoce nuestros productos</h2>
   
+  <section class="cards-container">
+
+   <div class="cart-icon" onClick="goToCart('{{user_id}}','{{cart_id}}')">
+    <i class="fa-solid fa-cart-arrow-down"></i>
+  </div>
+  
+
   {{#each products}}
   <div class="card" onclick="goDetails('{{_id}}')">
     {{#each thumbnail}}
@@ -58,6 +64,21 @@
     </div>
   </div>
   {{/each}}
+
+
+
+{{!-- {{#if cart}}
+  <h2>Productos en el carrito:</h2>
+  <ul>
+    {{#each cart.products}}
+      <li>{{this.product.title}} - Cantidad: {{this.quantity}}</li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>No hay productos en el carrito.</p>
+{{/if}} --}}
+
+
   </section>
 
   <div class="pagination-container">
@@ -81,7 +102,7 @@
 </div>
 
 
-<script src="./js/api.js"></script>
+
 <script>
   //import api from '../public/js/api.js';
   const query = new URLSearchParams(window.location.search); //me devuelve lo que tengo en la url
@@ -181,6 +202,17 @@ async function logout() {
             }
         response.json().then( d => alert(JSON.stringify(d)));
   }
+
+
+/*enviar datos del carrito*/
+
+async function goToCart (userId, cartId){
+  const url = "/cart/" + userId + "/" + cartId;
+  window.location.href = url;
+
+}
+
+ 
   
 </script>
    
