@@ -1,25 +1,8 @@
 import { Router } from "express";
-import { usersModel } from "../dao/models/users.model.js";
+import usersController from '../controllers/users.controller.js';
 
 const route = Router();
-
-route.post('/', async(req, res, next) => {  
-    const email = req.session.user;
-
-    if(email){
-        return res.redirect('/perfil')
-    }
-    
-    const usuario = req.body;
-    
-   
-    try {
-        const { _id } = await usersModel.create(usuario);
-        res.status(201).send({id: _id});
-    } catch (error) {
-        next(error);
-    }
-   
-});
+route.get('/', usersController.get.bind(usersController));
+route.post('/', usersController.create.bind(usersController));
 
 export default route;
