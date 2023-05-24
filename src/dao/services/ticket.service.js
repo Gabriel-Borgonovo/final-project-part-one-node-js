@@ -9,6 +9,10 @@ class TicketService{
     async generateTicket(data) {
         return (await this.#model.create(data));
     }
+
+    async findById(id) {
+        return this.#model.findById({_id: id});
+    }
 }
 
 export default TicketService;

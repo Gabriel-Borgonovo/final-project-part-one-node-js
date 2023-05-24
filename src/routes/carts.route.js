@@ -2,6 +2,7 @@ import { Router } from "express";
 import { authenticated, authorized } from "../config/middlewares/auth.js";
 import cartsController from '../controllers/carts.controller.js';
 
+
 const route = Router();
 
 route.post('/', cartsController.createCart.bind(cartsController));
@@ -24,5 +25,6 @@ route.put('/:cid/products/:pid', cartsController.updateQuantity.bind(cartsContro
 route.delete('/:cid', cartsController.deleteAllProductsInCart.bind(cartsController));
 
 route.post('/:cid/purchase', authenticated, authorized(['user']), cartsController.generateTicket.bind(cartsController));
+
 
 export default route; 

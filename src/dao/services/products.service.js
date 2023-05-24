@@ -27,7 +27,9 @@ class ProductsService {
     }
 
     async update(id, data) {
+        console.log('Updating product with ID:', id);
         await this.#model.updateEntity({_id: id}, data);
+        console.log('Product updated successfully.');
         const updatedData = await this.#model.getProductById(id);
         return updatedData;
     }

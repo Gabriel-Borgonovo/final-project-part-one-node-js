@@ -199,15 +199,20 @@ class CartsController {
 
       // Generar el ticket utilizando el servicio TicketService
       const ticket = await this.#ticketService.generateTicket(ticketData);
-      console.log('ticket', ticket)
+      //console.log('ticket', ticket)
 
        // Restar el stock de los productos comprados
-      await this.subtractStockFromProducts(cart.products);
+      //await this.subtractStockFromProducts(cart.products);
+      const failedProducts = await this.subtractStockFromProducts(cart.products);
 
-       // Realizar otras acciones necesarias para finalizar la compra
- 
+       // Filtrar los productos que no pudieron comprarse
+      const remainingProducts = cart.products.filter(productItem => !failedProducts.includes(productItem.product));
+
+      // Actualizar los productos del carrito con los productos no procesados
+      await this.#cartService.updateProducts(cid, remainingProducts);
+
        // Retornar la respuesta con el ticket generado
-       res.status(200).json({ ticket: ticket });
+       res.status(200).json({ ticket: ticket, products: failedProducts });
 
     } catch (error) {
       next(error);
@@ -215,15 +220,31 @@ class CartsController {
   }
 
   async subtractStockFromProducts(products) {
+    const failedProducts = [];
+    
     // Recorrer los productos del carrito y restar el stock
     for (const productItem of products) {
       const product = await this.#productsService.findById(productItem.product);
+      //console.log('producttototo', product)
       
-      if (product) {
-        product.stock -= productItem.quantity;
-        await this.#productsService.update(product._id, product);
+      if (product && product._id) {
+        // Verificar si hay suficiente stock para la cantidad indicada
+        if (product.stock >= productItem.quantity) {
+          product.stock -= productItem.quantity;
+          const productId = product._id.toString()
+          const productsupdated = await this.#productsService.update(productId, product);
+          return productsupdated;
+        } else {
+          // Si no hay suficiente stock, agregar el ID del producto a los no procesados
+          failedProducts.push(product._id);
+        }
+      } else {
+        // Si el producto no existe o no tiene un ID válido, agregar el ID del producto a los no procesados
+        failedProducts.push(productItem.product);
       }
     }
+    
+    return failedProducts;
   }
 
 
@@ -247,7 +268,7 @@ function generateUniqueCode() {
 // Función para calcular el monto total de la compra en base a los productos del carrito
 function calculateTotalAmount(products) {
   const products2 = products
-  console.log('products', products2)
+  //console.log('products', products2)
   let totalAmount = 0;
   for (const productItem of products2) {
     const product = productItem.product;
