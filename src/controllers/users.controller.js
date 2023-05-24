@@ -1,5 +1,5 @@
-import {usersModel} from "../dao/models/users.model.js";
-import UsersService from "../services/users.service.js";
+import {usersModel} from "../dao/mongo/models/users.model.js";
+import UsersService from "../dao/services/users.service.js";
 
 class UsersController {
   #service;

@@ -7,10 +7,10 @@
     "stock": "70",
     "category": "proteinas",
     "thumbnail": [
-      "1677719025655-proteina1.jpg"
+      "https://drive.google.com/drive/folders/1tcwD9x6WCd92ygOX2-IpJOzIXKfgsC6g"
     ],
     "status": true,
-    "id": 1
+    "_id": "1"
   },
   {
     "code": "2",
@@ -23,7 +23,7 @@
       "1677719158188-proteina2.webp"
     ],
     "status": true,
-    "id": 2
+    "_id": "2"
   },
   {
     "code": "3",
@@ -36,7 +36,7 @@
       "1677719264503-creatina1.png"
     ],
     "status": true,
-    "id": 3
+    "_id": "3"
   },
   {
     "code": "4",
@@ -49,7 +49,7 @@
       "1677759215949-Mancuernas1.jpg"
     ],
     "status": true,
-    "id": 4
+    "_id": "4"
   },
   {
     "code": "5",
@@ -62,7 +62,7 @@
       "1677759386454-mancuernas2.jpg"
     ],
     "status": true,
-    "id": 5
+    "_id": "5"
   },
   {
     "code": "6",
@@ -75,7 +75,7 @@
       "1677759623879-multivit1.jpg"
     ],
     "status": true,
-    "id": 6
+    "_id": "6"
   },
   {
     "code": "7",
@@ -88,11 +88,11 @@
       "1677759860567-multivit2.jpg"
     ],
     "status": true,
-    "id": 7
+    "_id": "7"
   },
   {
     "code": "8",
-    "title": "Set x 10 Colchonetas Gimnasia Alta Densidad 1 x 50 x 5",
+    "title": "Set x 10 Colchonetas Gimnasia Alta Dens_idad 1 x 50 x 5",
     "description": "Set de colchonetas para hacer gimnasia",
     "price": "11000",
     "stock": "10",
@@ -101,7 +101,7 @@
       "1677760543048-colchoneta.webp"
     ],
     "status": true,
-    "id": 8
+    "_id": "8"
   },
   {
     "code": "9",
@@ -114,11 +114,11 @@
       "1677760860980-guantesgym.webp"
     ],
     "status": true,
-    "id": 9
+    "_id": "9"
   },
   {
     "code": "10",
-    "title": "20 kg / 30 kg / 40 kg / 50 kg / 60 kg / 70KG Barra Configurar la Intensidad de Peso Olímpico Barra Recta for Gym",
+    "title": "20 kg / 30 kg / 40 kg / 50 kg / 60 kg / 70KG Barra Configurar la Intens_idad de Peso Olímpico Barra Recta for Gym",
     "description": "Barra olympica regulable ",
     "price": "45000",
     "stock": "12",
@@ -127,7 +127,7 @@
       "1677761133136-barra.jpg"
     ],
     "status": true,
-    "id": 10
+    "_id": "10"
   },
   {
     "code": "11",
@@ -140,6 +140,6 @@
       "1678312912866-barra-proteina1.jpg"
     ],
     "status": true,
-    "id": 11
+    "_id": "11"
   }
 ]

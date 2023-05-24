@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { authenticated, authorized } from "../config/middlewares/auth.js";
 import cartsController from '../controllers/carts.controller.js';
 
 const route = Router();
@@ -7,7 +8,7 @@ route.post('/', cartsController.createCart.bind(cartsController));
 
 route.get('/:cid', cartsController.getCartById.bind(cartsController));
 
-route.post("/:cid/product/:pid", cartsController.addProductToCart.bind(cartsController));
+route.post("/:cid/product/:pid", authenticated, authorized(['user']), cartsController.addProductToCart.bind(cartsController));
 
   //Elimina un producto dentro del carrito
 route.delete('/:cid/products/:pid', cartsController.deleteProductInCart.bind(cartsController));
@@ -21,5 +22,7 @@ route.put('/:cid/products/:pid', cartsController.updateQuantity.bind(cartsContro
 
 //Elimina todos los productos del carrito
 route.delete('/:cid', cartsController.deleteAllProductsInCart.bind(cartsController));
+
+route.post('/:cid/purchase', authenticated, authorized(['user']), cartsController.generateTicket.bind(cartsController));
 
 export default route; 

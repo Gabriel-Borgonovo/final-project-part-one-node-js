@@ -20,7 +20,7 @@
       <p>Stock: <b>{{stock}}</b></p>
       <h3>${{price}}</h3>
     </div>
-    <button class="btn-send-msg btn-add-cart">ir al carrito</button>
+    <button id="btnAddToCart" class="btn-send-msg btn-add-cart" onclick="addToCart('{{user_id}}','{{cart_id}}', '{{product_id}}')">agregar al carrito</button>
   </div>
   
 </section>
@@ -31,5 +31,38 @@
   function goToCart (userId, cartId){
     const url = "/cart/" + userId + "/" + cartId;
     window.location.href = url;
+  }
+
+   /*document.addEventListener("DOMContentLoaded", function() {
+    const btnAddToCart = document.getElementById("btnAddToCart");
+    btnAddToCart.addEventListener("click", addToCart);
+  });*/
+
+  function addToCart(userid, cartid, productid) {
+    const userId = userid;
+    const cartId = cartid;
+    const productId = productid;
+    console.log(userId, cartId, productId);
+    
+    // Realiza la solicitud para agregar el producto al carrito
+    fetch(`/api/carts/${cartId}/product/${productId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        quantity: 1
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Maneja la respuesta de la solicitud
+        console.log("Producto agregado al carrito:", data.cart);
+        // Redirecciona a la página del carrito
+        window.location.href = `/cart/${userId}/${cartId}`;
+      })
+      .catch(error => {
+        console.error("Error al agregar el producto al carrito:", error);
+      });
   }
 </script>

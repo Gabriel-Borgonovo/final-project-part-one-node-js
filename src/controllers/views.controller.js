@@ -1,7 +1,7 @@
-import UsersService from "../services/users.service.js";
-import CartsService from '../services/carts.service.js';
-import ProductsService from '../services/products.service.js';
-import productsModel from "../dao/models/products.model.js";
+import UsersService from "../dao/services/users.service.js";
+import CartsService from '../dao/services/carts.service.js';
+import ProductsService from '../dao/services/products.service.js';
+import productsModel from "../dao/mongo/models/products.model.js";
 
 
 class ViewsController {
@@ -40,6 +40,8 @@ class ViewsController {
         sort,
         lean: true,
       });
+
+      //console.log('products', products);
 
       const prevLink = products.hasPrevPage
         ? `/products/?page=${products.prevPage}&limit=${products.limit}${
@@ -82,6 +84,8 @@ class ViewsController {
     }
   }
 
+
+
   async renderHome(req, res, next) {
     res.render("index", {
       styles: "styles",
@@ -114,18 +118,21 @@ class ViewsController {
 
       const id = req.params.id;
       const product = await this.#productsService.findById(id);
+      const product_id = product._id.toString();
+      console.log(product_id)
       res.render("productDetails", {
         styles: "styles",
-        title: product.title,
-        thumbnail: product.thumbnail,
-        description: product.description,
-        price: product.price,
-        stock: product.stock,
-        category: product.category,
+        title: product.title || product[0].title,
+        thumbnail: product.thumbnail || product[0].thumbnail,
+        description: product.description || product[0].description,
+        price: product.price || product[0].price,
+        stock: product.stock || product[0].stock,
+        category: product.category || product[0].category,
         name: user.nombre,
         lastName: user.apellido,
         user_id: user_id,
         cart_id: cart_id,
+        product_id: product_id
       });
     } catch (error) {
       next(error);
@@ -155,6 +162,7 @@ class ViewsController {
         products,
         name: user.nombre,
         lastName: user.apellido,
+        cart_id: cart_id,
       });
     } catch (error) {
       next(error);

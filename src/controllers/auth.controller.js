@@ -1,6 +1,6 @@
 import { createHash } from "../utils/crypto.js";
 import { generateToken } from "../config/helpers/jwt.utils.js";
-import UsersService from "../services/users.service.js";
+import UsersService from "../dao/services/users.service.js";
 
 class AuthController {
   #service;
@@ -16,6 +16,7 @@ class AuthController {
           .status(401)
           .json({ error: "Usuario o contraseña incorrectos" });
       }
+      //console.log('user auth', user)
 
       const userToToken = {
         nombre: user.nombre,
@@ -39,9 +40,46 @@ class AuthController {
     }
   }
 
+
   async failureLogin(req, res, next) {
     res.send({ error: "Usuario o contraseña incorrectos" });
   }
+
+
+
+
+
+
+  async addProductToCart(req, res, next) {
+    try {
+      // Verificar si el usuario está autenticado
+      const token = req.cookies.token || req.header("token");
+      if (!token) {
+        return res.status(401).json({ error: "Usuario no autenticado" });
+      }
+  
+      // Obtener información del usuario desde el token
+      const decodedToken = verifyToken(token); // Implementa la función para verificar el token JWT
+      if (!decodedToken) {
+        return res.status(401).json({ error: "Token inválido" });
+      }
+  
+      // Agregar el producto al carrito del usuario
+      const userId = decodedToken.userId; // Suponiendo que el token contiene el ID del usuario
+      const productId = req.body.productId; // Obtener el ID del producto desde la solicitud
+  
+      // Lógica para agregar el producto al carrito del usuario
+      
+      // ...
+  
+      res.status(200).json({ message: "Producto agregado al carrito" });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+
+
 
   async register(req, res, next) {
     res.status(201).send({ message: "Usuario creado" });

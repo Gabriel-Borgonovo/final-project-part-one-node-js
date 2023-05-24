@@ -11,7 +11,8 @@ const datosConection = {
     github_client_secret: env.GITHUB_CLIENT_SECRET,
     github_callback_url: env.GITHUB_CALLBACK_URL,
     JWT_TOKEN: env.JWT_TOKEN,
-    SESSION_SECRET: env.SESSION_SECRET
+    SESSION_SECRET: env.SESSION_SECRET,
+    PERSISTENCE_TYPE: env.PERSISTENCE_TYPE
     };
 
 export default datosConection;

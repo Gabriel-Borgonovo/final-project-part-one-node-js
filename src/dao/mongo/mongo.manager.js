@@ -62,4 +62,13 @@ export default class MongoManager {
             throw error;
         }
     }
+
+    async paginate(query, options){
+        try {
+            const entidades = await this.model.paginate(query, options);
+            return entidades.map(e => e.toObject());
+        } catch (error) {
+            throw error;
+        }
+    }
 }

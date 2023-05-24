@@ -1,5 +1,5 @@
 import { Server } from 'socket.io';
-import messagesManager from '../dao/messages.manager.js'
+import messagesManager from '../dao/mongo/messages.manager.js'
 
 export let socketServer;
 

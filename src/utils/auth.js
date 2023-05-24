@@ -1,4 +1,4 @@
-import { usersModel } from "../dao/models/users.model.js";
+import { usersModel } from "../dao/mongo/models/users.model.js";
 
 export const authenticated = async (req, res, next) => {
 	const email = req.session.user;

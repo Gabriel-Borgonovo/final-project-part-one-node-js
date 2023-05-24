@@ -1,5 +1,5 @@
 import { socketServer } from "../socket/configure-socket.js";
-import ProductsService from '../services/products.service.js';
+import ProductsService from '../dao/services/products.service.js';
 
 
 class ProductsController {

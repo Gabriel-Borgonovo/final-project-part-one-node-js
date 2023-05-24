@@ -1,12 +1,15 @@
-import CartsService from '../services/carts.service.js';
-import ProductsService from '../services/products.service.js';
+import CartsService from '../dao/services/carts.service.js';
+import ProductsService from '../dao/services/products.service.js';
+import TicketService from '../dao/services/ticket.service.js';
 
 class CartsController {
   #cartService;
-  #productsService
-  constructor(cartService, productsService) {
+  #productsService;
+  #ticketService;
+  constructor(cartService, productsService, ticketService) {
     this.#cartService = cartService;
     this.#productsService = productsService;
+    this.#ticketService = ticketService;
   }
 
   async createCart(req, res, next) {
@@ -77,11 +80,9 @@ class CartsController {
 
       if (productIndex === -1) {
         // Si el producto no existe en el carrito, enviar un error
-        res
-          .status(404)
-          .send({
-            error: `El producto con id ${pid} no fue encontrado en el carrito con id ${cid}`,
-          });
+        res.status(404).send({
+          error: `El producto con id ${pid} no fue encontrado en el carrito con id ${cid}`,
+        });
         return;
       }
 
@@ -107,7 +108,7 @@ class CartsController {
 
       cart.products = products; // Actualizar el arreglo de productos del carrito con el nuevo arreglo de productos
 
-      //await cartsManager.updateCart(cid, cart); 
+      //await cartsManager.updateCart(cid, cart);
       await this.#cartService.update(cid, cart);
 
       res.send(cart);
@@ -162,7 +163,96 @@ class CartsController {
       next(error);
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+  async generateTicket(req, res, next) {
+    try {
+      const { cid } = req.params;
+      //console.log('cid ticket function', cid)
+
+      // Verificar si el carrito existe
+      const cart = await this.#cartService.findById(cid);
+      if (!cart) {
+        return res.status(404).json({ error: "Carrito no encontrado" });
+      }
+      //console.log('cart', cart)
+
+      // Crear el ticket
+      const ticketData = {
+        code: generateUniqueCode(), // Genera un código único para el ticket
+        purchase_datetime: new Date(),
+        amount: calculateTotalAmount(cart.products), // Calcula el monto total de la compra
+        purchaser: req.user.email, // Puedes ajustar esto según la estructura de tu usuario
+      };
+
+      //console.log('ticket data', ticketData)
+
+      // Generar el ticket utilizando el servicio TicketService
+      const ticket = await this.#ticketService.generateTicket(ticketData);
+      console.log('ticket', ticket)
+
+       // Restar el stock de los productos comprados
+      await this.subtractStockFromProducts(cart.products);
+
+       // Realizar otras acciones necesarias para finalizar la compra
+ 
+       // Retornar la respuesta con el ticket generado
+       res.status(200).json({ ticket: ticket });
+
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async subtractStockFromProducts(products) {
+    // Recorrer los productos del carrito y restar el stock
+    for (const productItem of products) {
+      const product = await this.#productsService.findById(productItem.product);
+      
+      if (product) {
+        product.stock -= productItem.quantity;
+        await this.#productsService.update(product._id, product);
+      }
+    }
+  }
+
+
 }
 
-const controller = new CartsController(new CartsService(), new ProductsService());
+const controller = new CartsController(new CartsService(), new ProductsService(), new TicketService());
 export default controller;
+
+
+
+
+// Función para generar un código único para el ticket
+function generateUniqueCode() {
+  const timestamp = new Date().getTime();
+  const randomNum = Math.floor(Math.random() * 1000); // Número aleatorio entre 0 y 999
+
+  const uniqueCode = `${timestamp}${randomNum}`;
+  return uniqueCode;
+}
+
+// Función para calcular el monto total de la compra en base a los productos del carrito
+function calculateTotalAmount(products) {
+  const products2 = products
+  console.log('products', products2)
+  let totalAmount = 0;
+  for (const productItem of products2) {
+    const product = productItem.product;
+    const quantity = productItem.quantity;
+    totalAmount += product.price * quantity;
+  }
+  return totalAmount;
+}

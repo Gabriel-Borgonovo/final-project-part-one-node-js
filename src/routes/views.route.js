@@ -7,16 +7,16 @@ const route = Router();
 
 route.get('/', viewsController.renderHome.bind(viewsController));
 
-route.get('/products', authenticated, authorized(['user']), viewsController.getProducts.bind(viewsController) );
+route.get('/products', authenticated, authorized(['user', 'admin']), viewsController.getProducts.bind(viewsController) );
 
 
 //route.get('/realtimeproducts', viewsController.getRTProducts.bind(viewsController));
 
-route.get('/chat', viewsController.getChat.bind(viewsController));
+route.get('/chat',authenticated, authorized(['user']), viewsController.getChat.bind(viewsController));
 
 /***vista de producto seleccionado por id */
 
-route.get('/products/:id', authenticated, authorized(['user']), viewsController.getProductById.bind(viewsController));
+route.get('/products/:id', authenticated, authorized(['user', 'admin']), viewsController.getProductById.bind(viewsController));
 
 
 /***vista de carrito seleccionado por id */
