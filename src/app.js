@@ -12,6 +12,7 @@ import { configurePassport } from './config/passport.config.js';
 import passport from 'passport';
 import router from './routes/index.js';
 import fakerRoutes from './routes/mocks/faker.route.js';
+import errorMiddleware from './errors/middlewares/error.middleware.js';
 
 
 const {__dirname} = fileDirName(import.meta);
@@ -76,6 +77,7 @@ app.use('/mockingproducts', fakerRoutes);
 
 
 /**Manejo de errores, middleware */
+//app.use(errorMiddleware);
 
 app.use((error, req, res, next) => {
     if(error.message){

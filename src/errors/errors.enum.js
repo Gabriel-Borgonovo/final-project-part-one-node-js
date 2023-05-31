@@ -10,6 +10,8 @@ const ErrorEnum = {
     ROUTINT_ERROR: 300, //ejemplo
     
     DATABASE_ERROR: 301,
+
+    NOT_FOUND: 400,
 }
 
 export default ErrorEnum;

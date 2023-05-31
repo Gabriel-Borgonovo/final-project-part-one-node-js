@@ -1,10 +1,10 @@
-import ErrorEnum from '../errors/errors.enum.mjs';
+import ErrorEnum from '../errors.enum.js';
 
 /**
  * Error middleware
  * @param {Error} error
  * @param {import('express').Request} req
- * @param {import('./custom-response.middleware.mjs').Response} res
+ * @param {import('./custom.response.middleware.js').Response} res
  * @param {import('express').NextFunction} Next
  * @returns {void}
  */
@@ -24,6 +24,9 @@ export default (error, req, res, next) => {
         case 3: // Errores de irrecuperables
             res.serverErrorResponse('UnhandledError');
             break;
+        case 4: // Errores de irrecuperables
+            res.serverErrorResponse('UnhandledError');
+            break
         default:
             res.serverErrorResponse('UnhandledError');
     }
