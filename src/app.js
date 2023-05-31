@@ -11,6 +11,8 @@ import MongoStore from 'connect-mongo';
 import { configurePassport } from './config/passport.config.js';
 import passport from 'passport';
 import router from './routes/index.js';
+import fakerRoutes from './routes/mocks/faker.route.js';
+
 
 const {__dirname} = fileDirName(import.meta);
 
@@ -68,6 +70,8 @@ app.use(express.static(__dirname + '/public')); //Esa linea de código es para m
 
 app.use('/', viewsRoute); 
 app.use('/api', router);
+app.use('/mockingproducts', fakerRoutes);
+
 
 
 
