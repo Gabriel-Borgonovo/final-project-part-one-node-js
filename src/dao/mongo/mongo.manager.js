@@ -1,3 +1,5 @@
+import logger from "../../logger/logger.js";
+
 export default class MongoManager {
     constructor(model){
         this.model = model;
@@ -10,7 +12,7 @@ export default class MongoManager {
                 .limit(Number(limit ?? 10));
             return entidades.map(e => e.toObject());
         } catch (error) {
-            console.error(error)
+            logger.error(error);
             throw error;
         }
     }
@@ -20,6 +22,7 @@ export default class MongoManager {
             const newEntity = await this.model.create({}); 
             return newEntity;
         } catch (error) {
+            logger.error(error);
             throw error;
         }
        
@@ -31,6 +34,7 @@ export default class MongoManager {
             const newEntity = await this.model.create(entity); 
             return newEntity.toObject();
         } catch (error) {
+            logger.error(error);
             throw error;
         }
        
@@ -41,6 +45,7 @@ export default class MongoManager {
             const entidad = await this.model.findOne({_id: id});
             return entidad;
         } catch (error) {
+            logger.error(error);
             throw error;
         }
     }
@@ -51,6 +56,7 @@ export default class MongoManager {
         try {
             await this.model.updateOne({_id: id}, newData);
         } catch (error) {
+            logger.error(error);
             throw error;
         }
     }
@@ -59,6 +65,7 @@ export default class MongoManager {
         try {
             await this.model.deleteOne({_id: id});
         } catch (error) {
+            logger.error(error);
             throw error;
         }
     }
@@ -68,6 +75,7 @@ export default class MongoManager {
             const entidades = await this.model.paginate(query, options);
             return entidades.map(e => e.toObject());
         } catch (error) {
+            logger.error(error);
             throw error;
         }
     }

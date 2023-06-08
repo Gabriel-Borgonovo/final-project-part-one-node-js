@@ -16,7 +16,7 @@ export function jwtStrategy() {
             },
             (payload, done) => {
                 try {
-                    console.log('payload', payload);
+                    //console.log('payload', payload);
                     return done(null, payload);
                 } catch (error) {
                     done(error, false);

@@ -119,7 +119,7 @@ class ViewsController {
       const id = req.params.id;
       const product = await this.#productsService.findById(id);
       const product_id = product._id.toString();
-      console.log(product_id)
+      //console.log(product_id)
       res.render("productDetails", {
         styles: "styles",
         title: product.title || product[0].title,
@@ -173,7 +173,7 @@ class ViewsController {
     try {
       const cart = JSON.parse(req.body);
 
-      console.log("cart", cart);
+      //console.log("cart", cart);
 
       // procesar el carrito y devolver una respuesta
       res.json({ message: "Carrito agregado correctamente." });

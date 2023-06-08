@@ -3,6 +3,7 @@ import path from 'path';
 import fileDirName from '../../utils/fileDirName.js';
 const {__dirname} = fileDirName(import.meta);
 const filePath = path.resolve(__dirname, 'json/products.json');
+import logger from '../../logger/logger.js';
 
 class ProductsManagerfs {
   constructor() {
@@ -85,10 +86,10 @@ class ProductsManagerfs {
       let index = products.findIndex((p) => p._id === idNumber);
 
       products[index] = { ...products[index], ...data };
-      console.log(`El objeto de id: ${id}, fue actualizado con éxito`);
+      logger.info(`El objeto de id: ${id}, fue actualizado con éxito`);
       await fs.promises.writeFile(this.path, JSON.stringify(products, null, 2));
     } catch (error) {
-      console.error(`Error al actualizar el producto con id ${id}: ${error}`);
+      logger.error(`Error al actualizar el producto con id ${id}: ${error}`);
     }
   }
 

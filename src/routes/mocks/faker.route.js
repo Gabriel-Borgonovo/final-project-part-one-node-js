@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { Faker, es, en, base } from "@faker-js/faker";
+import logger from "../../logger/logger.js";
 
 const faker = new Faker({
     locale: [es, en, base],
@@ -26,7 +27,7 @@ route.get('/', async (req, res, next) => {
   
       res.json(products);
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       next(error);
       res.status(500).json({ error: 'Internal Server Error' });
     }

@@ -6,6 +6,7 @@ import github from 'passport-github2';
 import datosConection from '../../data.js';
 import { jwtStrategy } from "./strategies/jwt.strategy.js";
 import cartsManager from '../dao/mongo/carts.manager.js';
+import logger from "../logger/logger.js";
 
 const LocalStrategy = local.Strategy;
 const GithubStrategy = github.Strategy;
@@ -60,12 +61,12 @@ export function configurePassport() {
             try {
                 const user = await usersModel.findOne({email: username});
                 if(!user){
-                    console.log('Usuario no exitente en el login');
+                    logger.warn('Usuario no exitente en el login');
                     return done(null, false);
                 }
 
                 if(!isValidPassword(password, user.password)){
-                    console.log('Contraseña incorrecta');
+                    logger.warn('Contraseña incorrecta');
                     return done(null, false);
                 }
 

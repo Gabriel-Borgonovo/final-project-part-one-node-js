@@ -1,4 +1,5 @@
 import productsModel from "./models/products.model.js";
+import logger from "../../logger/logger.js";
 
 class Products{
     #persistencia;
@@ -11,6 +12,7 @@ class Products{
             const newEntity = await this.#persistencia.create(entity); 
             return newEntity.toObject();
         } catch (error) {
+            logger.error(error);
             throw error;
         }
     }
@@ -22,7 +24,7 @@ class Products{
                 .limit(Number(limit ?? 10));
             return entidades.map(e => e.toObject());
         } catch (error) {
-            console.error(error)
+            logger.error(error);
             throw error;
         }
     }
@@ -32,6 +34,7 @@ class Products{
             const entidad = await this.#persistencia.findOne({_id: id});
             return entidad;
         } catch (error) {
+            logger.error(error);
             throw error;
         }
     }
@@ -40,6 +43,7 @@ class Products{
         try {
             await this.#persistencia.updateOne({_id: id}, newData);
         } catch (error) {
+            logger.error(error);
             throw error;
         }
     }
@@ -48,6 +52,7 @@ class Products{
         try {
             await this.#persistencia.deleteOne({_id: id});
         } catch (error) {
+            logger.error(error);
             throw error;
         }
     }
@@ -57,6 +62,7 @@ class Products{
             const entidades = await this.#persistencia.paginate(query, options);
             return entidades;
         } catch (error) {
+            logger.error(error);
             throw error;
         }
     }

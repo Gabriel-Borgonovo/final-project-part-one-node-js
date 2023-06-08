@@ -49,7 +49,7 @@
   function generateTicket(cart_id) {
     // Realiza la solicitud para generar el ticket
     const cid = cart_id
-    console.log('cid', cid)
+    //console.log('cid', cid)
     fetch(`/api/carts/${cid}/purchase`, {
       method: "POST",
       headers: {
@@ -60,7 +60,7 @@
       .then(response => response.json())
       .then(data => {
         // Maneja la respuesta de la solicitud
-        console.log("Ticket generado:", data.ticket);
+        //console.log("Ticket generado:", data.ticket);
         //console.log('ticket type, ', typeof data.ticket._id)
         // Redirecciona a la página del ticket generado
         window.location.href = `/api/ticket/${data.ticket._id}`;

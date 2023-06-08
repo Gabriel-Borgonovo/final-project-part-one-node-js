@@ -13,6 +13,8 @@ import passport from 'passport';
 import router from './routes/index.js';
 import fakerRoutes from './routes/mocks/faker.route.js';
 import errorMiddleware from './errors/middlewares/error.middleware.js';
+import logger from './logger/logger.js';
+import loggerRoutes from './routes/logger/logger.route.js'
 
 
 const {__dirname} = fileDirName(import.meta);
@@ -72,6 +74,7 @@ app.use(express.static(__dirname + '/public')); //Esa linea de código es para m
 app.use('/', viewsRoute); 
 app.use('/api', router);
 app.use('/mockingproducts', fakerRoutes);
+app.use('/loggerTest', loggerRoutes);
 
 
 
@@ -90,7 +93,7 @@ app.use((error, req, res, next) => {
 
 
 const httpServer = app.listen(PORT, () => 
-    console.log(`Servidor express escuchando en el puerto ${PORT}`)
+    logger.info(`Servidor express escuchando en el puerto ${PORT}`)
 );
 
 configureSocket(httpServer); 
