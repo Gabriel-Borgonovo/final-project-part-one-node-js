@@ -12,11 +12,14 @@ async function send(event){
 
     const userRole = document.getElementById('use').checked;
     const adminRole = document.getElementById('adm').checked;
+    const premiumRole = document.getElementById('prem').checked;
 
     if (userRole) {
         role = 'user';
       } else if (adminRole) {
         role = 'admin';
+      } else if (premiumRole) {
+        role = 'premium'
       }
 
     api.post('/api/auth/register', {

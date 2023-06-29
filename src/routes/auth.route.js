@@ -7,7 +7,11 @@ import authController from "../controllers/auth.controller.js";
 const route = Router();
 
 
-route.post('/login', authController.login.bind(authController));
+route.post('/login',
+passport.authenticate("login", {
+  failureRedirect: "/api/auth/failurelogin",
+}),
+  authController.login.bind(authController));
 
 route.get('/failurelogin', authController.failureLogin.bind(authController));
 
@@ -39,6 +43,8 @@ route.post(
   );
 
   route.post('/restore-password', authController.restorePassword.bind(authController));
+
+  route.post('/change-password', authController.changePassword.bind(authController));
 
   route.post('/logout', authenticated, authController.logout.bind(authController));
 

@@ -22,6 +22,10 @@ class UsersService {
         return this.#model.findById(id);
     }
 
+    async findByEmail(email) {
+        return this.#model.findOne({email: email});
+    }
+
     async update(id, data) {
         await this.#model.updateOne({_id: id}, data);
         const updatedData = await this.findById(id);

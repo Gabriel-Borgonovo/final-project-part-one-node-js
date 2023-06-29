@@ -33,5 +33,7 @@ async function login(event){
     } else {
         const errorData = await response.json();
         console.log(errorData.error);
+        alert('usuario o contraseña incorrectos');
     }
+
 }

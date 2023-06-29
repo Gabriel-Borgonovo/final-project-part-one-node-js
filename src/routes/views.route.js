@@ -7,7 +7,7 @@ const route = Router();
 
 route.get('/', viewsController.renderHome.bind(viewsController));
 
-route.get('/products', authenticated, authorized(['user', 'admin']), viewsController.getProducts.bind(viewsController) );
+route.get('/products', authenticated, authorized(['user', 'admin', 'premium']), viewsController.getProducts.bind(viewsController) );
 
 
 //route.get('/realtimeproducts', viewsController.getRTProducts.bind(viewsController));
@@ -29,5 +29,10 @@ route.get('/register', viewsController.renderRegister.bind(viewsController));
 
 route.get('/login', viewsController.renderLogin.bind(viewsController));
 
+route.get('/restore-password', viewsController.restorePassword.bind(viewsController));
+
+route.get('/restore-password/form/:email', viewsController.restorePasswordForm.bind(viewsController));
+
+route.get('/add-new-product', authenticated, authorized(['premium']), viewsController.addProductForm.bind(viewsController));
 
 export default route;

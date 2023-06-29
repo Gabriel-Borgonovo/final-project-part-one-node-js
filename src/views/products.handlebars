@@ -42,7 +42,7 @@
 </aside>
 
 
-  <h2 class="prod-h2">Hey <b>{{name}}</b> rol: <b>{{role}}</b>!!! Conoce nuestros productos</h2>
+  <h2 class="prod-h2">Hey <b>{{name}}</b> rol: <b class="b-role">{{role}}</b><b class="link-for-premium">!!! Conoce nuestros productos</b></h2>
   
   <section class="cards-container">
 
@@ -63,6 +63,7 @@
       <p class="card-price">{{category}}</p>
     </div>
   </div>
+  <button class="btn-delete-product">Delete</button>
   {{/each}}
 
 
@@ -212,7 +213,18 @@ async function goToCart (userId, cartId){
 
 }
 
- 
+ const role = document.querySelector('.b-role').innerText;
+ console.log('role:', role)
+ const linkPremium = document.querySelector('.link-for-premium');
+ const btnsDelete = document.querySelectorAll('.btn-delete-product');
+
+ if(role === 'premium'){
+    linkPremium.innerHTML = '<a href="http://localhost:8080/add-new-product"> Agregar nuevo producto</a>';
+    btnsDelete.forEach((btn) => {
+      btn.style.display = 'block';
+    })
+    
+ }
   
 </script>
    

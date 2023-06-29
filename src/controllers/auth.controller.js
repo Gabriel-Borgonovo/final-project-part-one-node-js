@@ -1,6 +1,7 @@
-import { createHash } from "../utils/crypto.js";
+import { createHash, isValidPassword } from "../utils/crypto.js";
 import { generateToken } from "../config/helpers/jwt.utils.js";
 import UsersService from "../dao/services/users.service.js";
+import emailService from "../dao/services/mail/mail.service.js";
 
 class AuthController {
   #service;
@@ -10,14 +11,17 @@ class AuthController {
 
   async login(req, res, next) {
     try {
-      const user = await this.#service.findOne({ email: req.body.email });
+      req.session.user = req.user.email;
+
+      console.log('req.session.user', req.session.user);
+      const user = await this.#service.findOne({ email: req.session.user });
       if (!user) {
         return res
           .status(401)
-          .json({ error: "Usuario o contraseña incorrectos" });
+          .send({ error: "Usuario o contraseña incorrectos" });
       }
       //console.log('user auth', user)
-
+      
       const userToToken = {
         nombre: user.nombre,
         apellido: user.apellido,
@@ -98,21 +102,47 @@ class AuthController {
 
   async restorePassword(req, res, next) {
     try {
-      const { email, newPassword } = req.body;
+      const { email } = req.body;
+      emailService.sendEmail({
+        to: email,
+        subject: "Welcome to CoderIntegrador",
+        html: `<h1>Hello ${email}</h1>
+        <a href="http://localhost:8080/restore-password/form/${email}" target="_blank" >Restablecer contraseña</a>`
+      });
 
-      const user = await this.#service.findOne({ email });
+      res.send({message: 'enviado', email: email});
 
-      if (!user) {
-        res.status(404).send({ error: "User not found" });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async changePassword(req, res, next) {
+    try {
+      const newPass = req.body.newPass;
+      const confirmNewPass = req.body.confirmNewPass;
+      const email = req.body.email;
+
+      const user = await this.#service.findByEmail(email);     
+      if(!user) res.status(404).send({message: 'El usuario no existe'});
+
+      //const oldPass = user.password;
+      if(isValidPassword(newPass, user.password)) {
+        res.status(400).send({message: 'La nueva contraseña no puede ser igual a la anterior'});
         return;
       }
 
-      const hashedPassword = createHash(newPassword);
-      await this.#service.updateOne(
-        { email },
-        { $set: { password: hashedPassword } }
-      );
-      res.send({ message: "Password changed" });
+      if(newPass === confirmNewPass) {
+        user.password = createHash(newPass);
+        
+        const id = user.id.toString();
+        await this.#service.update(id, user);
+        
+      } else {
+        res.status(400).send({message: 'Las contraseñas no coiciden'});
+      }
+      
+      res.status(200).send({response: 'ok'})
     } catch (error) {
       next(error);
     }

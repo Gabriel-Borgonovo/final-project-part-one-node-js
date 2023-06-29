@@ -212,7 +212,46 @@ class ViewsController {
     }
   }
 
+  async restorePassword(req, res, next) {
+    try {
+      res.render('restorePassword', {
+        styles: 'styles',
+      })
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async restorePasswordForm(req, res, next) {
+    try {
+      const emailParam = req.params.email;
+      console.log('emailParam', emailParam);
+      res.render('formRestorePassword', {
+        styles: 'styles',
+        email: emailParam,
+      })
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async addProductForm(req, res, next) {
+    try {
+      const user = await this.#usersService.findOne({ email: req.user.email });
+      const name = user.nombre;
+      const lastName = user.apellido;
+      res.render('formAddProduct', {
+        styles: 'styles',
+        name: name,
+        lastName: lastName,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
 }
 
 const controller = new ViewsController(new UsersService(), new CartsService(), new ProductsService());
 export default controller;
+

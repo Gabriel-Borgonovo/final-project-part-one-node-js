@@ -12,7 +12,15 @@ const datosConection = {
     github_callback_url: env.GITHUB_CALLBACK_URL,
     JWT_TOKEN: env.JWT_TOKEN,
     SESSION_SECRET: env.SESSION_SECRET,
-    PERSISTENCE_TYPE: env.PERSISTENCE_TYPE
+    PERSISTENCE_TYPE: env.PERSISTENCE_TYPE,
+    MAIL: {
+        host: 'smtp.ethereal.email',
+        port: 587,
+        auth: {
+            user: 'dariana49@ethereal.email',
+            pass: '4XrVTf8BpSwsneUX5X'
+        }
+    },
     };
 
 export default datosConection;

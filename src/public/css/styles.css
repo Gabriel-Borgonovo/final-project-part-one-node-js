@@ -661,6 +661,33 @@ button.active{
     background-color: rgb(187, 10, 10);
 }
 
+.addProductContainer,
+.rest-pass-container{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-form,
+.form-rest-pass{
+    background-color: rgb(162, 178, 221);
+    padding: 20px;
+}
+
+.email-input{
+    font-size: 18px;
+    padding: 3px;
+}
+
+.form-disp{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
 
 
 /*footer styles**/
@@ -711,6 +738,15 @@ button.active{
 
 .btn-go-products{
     text-decoration: none;
+}
+
+.btn-delete-product{
+    background-color: #ad0026;
+    color: #fff;
+    border: none;
+    padding: 3px 5px;
+    cursor: pointer;
+    display: none;
 }
 
 .footer-h2{
