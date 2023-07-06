@@ -9,7 +9,7 @@ route.post('/', cartsController.createCart.bind(cartsController));
 
 route.get('/:cid', cartsController.getCartById.bind(cartsController));
 
-route.post("/:cid/product/:pid", authenticated, authorized(['user']), cartsController.addProductToCart.bind(cartsController));
+route.post("/:cid/products/:pid", authenticated, authorized(['user']), cartsController.addProductToCart.bind(cartsController));
 
   //Elimina un producto dentro del carrito
 route.delete('/:cid/products/:pid', cartsController.deleteProductInCart.bind(cartsController));

@@ -1,0 +1,72 @@
+paths:
+  /api/carts/:
+    post:
+      summary: Crea un nuevo carrito
+      tags:
+        - Carts
+  /api/carts/{cid}:
+    get:
+      summary: Obtiene un carrito por su Id
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: El Id del carrito
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: El carrito fue obtenido satisfactoriamente de la base de datos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#components/schemas/Cart'
+        500:
+          description: Error interno del servidor. Usualmente generado por una query defectuosa o un fallo de la conexión con la base de datos
+   
+    put:
+      summary: Actualiza el carrito con un nuevo array de productos
+      tags:
+        - Carts
+    delete:
+      summary: Elimina todos los productos del carrito
+      tags:
+        - Carts
+  /api/carts/{cid}/products/{pid}:
+    post:
+      summary: Agrega un producto al carrito
+      tags:
+        - Carts
+    put:
+      summary: actualiza la propiedad cantidad de un producto determinado que ya se encuentra en el carrito
+      tags:
+        - Carts
+    delete:
+      summary: Elimina un producto del carrito
+      tags:
+        - Carts
+  /api/carts/{cid}/purchase/:
+    post:
+      summary: Genera un ticket de compra
+      tags:
+        - Carts
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: El Id del carrito
+          example: 641b8b9dc1c21faee412a8ee
+        products:
+          type: Array
+          description: El carrito con los productos
+          example: [{producto1}, {producto2}]

@@ -1,0 +1,179 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtiene todos los Productos
+      tags:
+        - Products
+      responses:
+        200:
+          description: Los productos fueron obtenidos satisfactoriamente de la base de datos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#components/schemas/Product'
+        500:
+          description: Error interno del servidor. Usualmente generado por una query defectuosa o un fallo de la conexión con la base de datos
+    post:
+      summary: Agrega un producto a la base de datos
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateProduct'
+  /api/products/{pid}:
+    get:
+      summary: Obtiene un producto por su Id
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          description: El Id del producto
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: El producto fue obtenido satisfactoriamente de la base de datos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#components/schemas/Product'
+        500:
+          description: Error interno del servidor. Usualmente generado por una query defectuosa o un fallo de la conexión con la base de datos
+    put:
+      summary: Actualiza un producto de la base de datos
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          description: El Id del producto
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateProduct'
+    delete:
+      summary: Elimina un producto de la base de datos
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          description: El Id del producto
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateProduct'
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: El Id del producto
+          example: 641b8b9dc1c21faee412a8ee
+        code:
+          type: string
+          description: El código del producto
+          example: '1'
+        title:
+          type: string
+          description: El título del producto
+          example: Titulo del producto
+        description:
+          type: string
+          description: La descripción del producto
+          example: Descripción del producto
+        price:
+          type: number
+          description: El precio del producto
+          example: 999
+        stock:
+          type: number
+          description: El stock del producto
+          example: 99
+        category:
+          type: string
+          description: La categoria del producto
+          example: Categoria del producto
+        thumbnail:
+          type: Array
+          description: Las imagenes del producto
+          example: [product1.png]
+        status:
+          type: Boolean
+          description: Status del producto
+          example: true
+  requestBodies:
+    updateProduct:
+      type: object
+      required:
+        - code
+        - title
+        - description
+        - price
+        - stock
+        - category
+        - thumbnail
+      properties:
+        code:
+          type: string
+          description: El código del producto
+          example: '1'
+        title:
+          type: string
+          description: El título del producto
+          example: Titulo del producto
+        description:
+          type: string
+          description: La descripción del producto
+          example: Descripción del producto
+        price:
+          type: number
+          description: El precio del producto
+          example: 999
+        stock:
+          type: number
+          description: El stock del producto
+          example: 99
+        category:
+          type: string
+          description: La categoria del producto
+          example: Categoria del producto
+        thumbnail:
+          type: Array
+          description: Las imagenes del producto
+          example: [product1.png]
+      example:
+        code: '1'
+        title: El título del producto
+        description: La descripción del producto
+        price: 999
+        stock: 99
+        category: categoria del producto
+        thumbnail: [product1.png]

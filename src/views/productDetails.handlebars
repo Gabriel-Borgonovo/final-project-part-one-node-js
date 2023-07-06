@@ -45,7 +45,7 @@
     console.log(userId, cartId, productId);
     
     // Realiza la solicitud para agregar el producto al carrito
-    fetch(`/api/carts/${cartId}/product/${productId}`, {
+    fetch(`/api/carts/${cartId}/products/${productId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

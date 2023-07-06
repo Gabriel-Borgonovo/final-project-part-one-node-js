@@ -14,7 +14,9 @@ import router from './routes/index.js';
 import fakerRoutes from './routes/mocks/faker.route.js';
 import errorMiddleware from './errors/middlewares/error.middleware.js';
 import logger from './logger/logger.js';
-import loggerRoutes from './routes/logger/logger.route.js'
+import loggerRoutes from './routes/logger/logger.route.js';
+import spec from './docs/swagger.options.js';
+import swaggerUiExpress from 'swagger-ui-express';
 
 
 const {__dirname} = fileDirName(import.meta);
@@ -65,6 +67,7 @@ app.use(passport.session());
 
 configureHandlebars(app);
 
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(spec));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
