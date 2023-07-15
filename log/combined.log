@@ -239,3 +239,15 @@
 {"level":"info","message":"Servidor express escuchando en el puerto 8080","timestamp":"2023-07-06T22:25:05.536Z"}
 {"level":"info","message":"Servidor express escuchando en el puerto 8080","timestamp":"2023-07-06T22:27:47.901Z"}
 {"level":"info","message":"Servidor express escuchando en el puerto 8080","timestamp":"2023-07-06T22:27:50.078Z"}
+{"level":"info","message":"Servidor express escuchando en el puerto 8080","timestamp":"2023-07-09T01:30:36.305Z"}
+{"level":"info","message":"Servidor express escuchando en el puerto 8080","timestamp":"2023-07-13T21:29:52.005Z"}
+{"level":"info","message":"Servidor express escuchando en el puerto 8080","timestamp":"2023-07-14T15:47:16.994Z"}
+{"level":"info","message":"Servidor express escuchando en el puerto 8080","timestamp":"2023-07-14T18:36:36.933Z"}
+{"_message":"products validation failed","errors":{"title":{"kind":"required","message":"Path `title` is required.","name":"ValidatorError","path":"title","properties":{"message":"Path `title` is required.","path":"title","type":"required"}}},"level":"error","message":"products validation failed: title: Path `title` is required.","name":"ValidationError","timestamp":"2023-07-14T19:28:03.178Z"}
+{"_message":"products validation failed","errors":{"title":{"kind":"required","message":"Path `title` is required.","name":"ValidatorError","path":"title","properties":{"message":"Path `title` is required.","path":"title","type":"required"}}},"level":"error","message":"products validation failed: title: Path `title` is required.","name":"ValidationError","timestamp":"2023-07-14T19:31:13.478Z"}
+{"level":"info","message":"Servidor express escuchando en el puerto 8080","timestamp":"2023-07-14T23:18:14.040Z"}
+{"level":"info","message":"Servidor express escuchando en el puerto 8080","timestamp":"2023-07-14T23:23:50.159Z"}
+{"level":"info","message":"Servidor express escuchando en el puerto 8080","timestamp":"2023-07-14T23:23:58.354Z"}
+{"level":"info","message":"Servidor express escuchando en el puerto 8080","timestamp":"2023-07-14T23:24:12.465Z"}
+{"level":"info","message":"Servidor express escuchando en el puerto 8080","timestamp":"2023-07-14T23:25:26.897Z"}
+{"level":"info","message":"Servidor express escuchando en el puerto 8080","timestamp":"2023-07-14T23:25:31.013Z"}

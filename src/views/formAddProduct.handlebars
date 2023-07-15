@@ -3,16 +3,77 @@
 <div class="addProductContainer">
     <h1>Agregar nuevo producto</h1>
     <form class="product-form form-disp">
-        <input type="text" placeholder="code" />
-        <input type="text" placeholder="Nombre del producto" />
-        <input type="text" placeholder="Descripción del producto" />
-        <input type="text" placeholder="Precio" />
-        <input type="text" placeholder="Stock" />
-        <input type="text" placeholder="Categoria" />
-        <input type="file" />
+        <input type="text" id="codep" placeholder="code" />
+        <input type="text" id="titlep" placeholder="Nombre del producto" />
+        <input type="text" id="descrip" placeholder="Descripción del producto" />
+        <input type="text" id="pricep" placeholder="Precio" />
+        <input type="text" id="stockp" placeholder="Stock" />
+        <input type="text" id="categoryp" placeholder="Categoria" />
+        <input type="file" id="imgp" />
+        <button id="btn-new-product">Enviar</button>
     </form>
 </div>
 
 <script>
+    const d = document;
+
+    const inputCode = d.getElementById('codep'),
+        inputName = d.getElementById('titlep'),
+        inputDescription = d.getElementById('descrip'),
+        inputPrice = d.getElementById('pricep'),
+        inputStock = d.getElementById('stockp'),
+        inputCategory = d.getElementById('categoryp'),
+        inputImg = d.getElementById('imgp'),
+        btnNewProduct = d.getElementById('btn-new-product');
+
     
+    btnNewProduct.addEventListener('click', (e) => {
+        e.preventDefault();
+        const newProducto = {
+            code: inputCode.value,
+            title: inputName.value,
+            description: inputDescription.value,
+            price: parseFloat(inputPrice.value),
+            stock: parseInt(inputStock.value),
+            category: inputCategory.value,
+        };
+
+        inputImg.disabled = true;
+        //console.log('new product', newProducto);
+
+        const formData = new FormData();
+        formData.append('code', newProducto.code);
+        formData.append('title', newProducto.title);
+        formData.append('description', newProducto.description);
+        formData.append('price', newProducto.price);
+        formData.append('stock', newProducto.stock);
+        formData.append('category', newProducto.category);
+        formData.append('thumbnail', inputImg.files[0]);
+
+        const createNewProduct = async () => {
+            try{
+                const url = '/api/products';
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if(response.ok){
+                    //console.log('response', response);
+                    const urlproducts = "/products";
+                    window.location.href = urlproducts;
+                }
+
+                
+            }catch(error){
+                console.log(error);
+            }
+            
+        }
+
+        createNewProduct();
+
+    });
+
+
 </script>

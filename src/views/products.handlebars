@@ -63,21 +63,8 @@
       <p class="card-price">{{category}}</p>
     </div>
   </div>
-  <button class="btn-delete-product">Delete</button>
+  <button class="btn-delete-product" onclick="deleteProduct('{{_id}}')">Delete</button>
   {{/each}}
-
-
-
-{{!-- {{#if cart}}
-  <h2>Productos en el carrito:</h2>
-  <ul>
-    {{#each cart.products}}
-      <li>{{this.product.title}} - Cantidad: {{this.quantity}}</li>
-    {{/each}}
-  </ul>
-{{else}}
-  <p>No hay productos en el carrito.</p>
-{{/if}} --}}
 
 
   </section>
@@ -224,6 +211,35 @@ async function goToCart (userId, cartId){
       btn.style.display = 'block';
     })
     
+ }
+
+
+
+ //Eliminar productos (solo usuarios premium)
+
+ async function deleteProduct(pid) {
+  try{
+    console.log('soy un botón elimino el producto con id: ', pid)
+    const url = `/api/products/${pid}`;
+    const response = await fetch(url, {
+      method: 'DELETE',
+    });
+
+    if(response.ok) {
+      Swal.fire({
+        icon: 'success',
+        title: `Producto con id: ${pid} Ha sido eliminado!!!`,
+        showConfirmButton: true,
+        confirmButtonText:'<i class="fa fa-thumbs-up"></i> Great!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload(); //recarga la página
+        } 
+      }); 
+    }
+  } catch(error){
+    console.log(error);
+  }
  }
   
 </script>

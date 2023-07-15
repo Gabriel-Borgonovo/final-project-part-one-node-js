@@ -2,6 +2,7 @@ import { socketServer } from "../socket/configure-socket.js";
 import ProductsService from '../dao/services/products.service.js';
 
 
+
 class ProductsController {
   #service;
   constructor(service) {
@@ -35,6 +36,7 @@ class ProductsController {
   async createProduct(req, res, next) {
     try {
       const product = req.body;
+      
       const files = req.files?.map((file) => file.filename);
 
       if (!files) {
