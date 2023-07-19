@@ -1,6 +1,6 @@
 {{>navbar}}
 
-<div class="product-details">
+<div class="cart-container-all">
    <h1 class="product-d-h1">Cart</h1>
 
     <table class="cart-table">
@@ -10,9 +10,10 @@
                 <th class="cart-th">Producto</th>
                 <th class="cart-th">Cantidad</th>
                 <th class="cart-th">Precio</th>
+                <th class="cart-th">Acciones</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="cart-body">
             {{#if products}}
             {{#each products}}
             <tr class="cart-tr">
@@ -22,6 +23,7 @@
                 <td>{{this.title}}</td>
                 <td>{{this.quantity}}</td>
                 <td>{{this.price}}</td>
+                <td><button class="btn-delete-product active-btn" onclick="deleteProductFromCart('{{this._id}}')"><img src="https://cdn-icons-png.flaticon.com/512/39/39220.png" class="icon-delete-img" /></button></td>
             </tr>
             {{/each}}
 
@@ -42,15 +44,15 @@
   
   
 </section>
-    
+   
 </div> 
-
+{{>footer}} 
 <script>
   function generateTicket(cart_id) {
     // Realiza la solicitud para generar el ticket
     const cid = cart_id
-    //console.log('cid', cid)
-    fetch(`/api/carts/${cid}/purchase`, {
+    console.log('cid', cid)
+    /*fetch(`/api/carts/${cid}/purchase`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -67,7 +69,23 @@
       })
       .catch(error => {
         console.error("Error al generar el ticket:", error);
-      });
+      });*/
+  }
+
+  async function deleteProductFromCart(pid) {
+    const currentURL = window.location.href;
+    const cartID = currentURL.split('/').pop();
+    console.log('ID del producto:', pid);
+    console.log('ID del carrito:', cartID);
+    const url = `/api/carts/${cartID}/products/${pid}`;
+
+    const response = await fetch(url, {
+      method: 'DELETE'
+    });
+
+    if(response.ok){
+      window.location.reload(); //recarga la página
+    }
   }
 </script>
 

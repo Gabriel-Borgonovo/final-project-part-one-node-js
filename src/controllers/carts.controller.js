@@ -70,14 +70,12 @@ class CartsController {
   async deleteProductInCart(req, res, next) {
     try {
       const { cid, pid } = req.params;
-
       const cart = await this.#cartService.findById(cid);
-
       const productIndex = cart.products.findIndex(
         // Verifico si el producto ya existe en el carrito
-        (p) => String(p.product._id) === pid
+        (p) => String(p._id) === pid
       );
-
+      
       if (productIndex === -1) {
         // Si el producto no existe en el carrito, enviar un error
         res.status(404).send({

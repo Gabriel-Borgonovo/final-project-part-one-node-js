@@ -154,6 +154,7 @@ class ViewsController {
           title: product.product.title,
           price: product.product.price,
           quantity: product.quantity,
+          _id: product._id,
         };
       });
 
@@ -240,11 +241,23 @@ class ViewsController {
       const user = await this.#usersService.findOne({ email: req.user.email });
       const name = user.nombre;
       const lastName = user.apellido;
+      const email = user.email;
       res.render('formAddProduct', {
         styles: 'styles',
         name: name,
         lastName: lastName,
+        email: email,
       });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async changeRoles(req, res, next){
+    try {
+      res.render('changeRole', {
+        styles: 'styles',
+      })
     } catch (error) {
       next(error);
     }

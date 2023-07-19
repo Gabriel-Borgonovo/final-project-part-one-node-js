@@ -42,7 +42,8 @@
 </aside>
 
 
-  <h2 class="prod-h2">Hey <b>{{name}}</b> rol: <b class="b-role">{{role}}</b><b class="link-for-premium">!!! Conoce nuestros productos</b></h2>
+  <h2 class="prod-h2"><span>Usuario: <b class="b-role">{{role}}</b></span> <b class="link-for-premium">Conoce nuestros productos !!!</b>
+  <button onclick="changeRole('{{user_id}}')">Cambiar role</button></h2>
   
   <section class="cards-container">
 
@@ -61,9 +62,10 @@
       <p class="card-text">{{description}}</p>
       <p class="card-price">${{price}}</p>
       <p class="card-price">{{category}}</p>
+      <p class="card-price" id="owner-text">{{owner}}</p>
     </div>
   </div>
-  <button class="btn-delete-product" onclick="deleteProduct('{{_id}}')">Delete</button>
+  <button class="btn-delete-product" onclick="deleteProduct('{{_id}}')"><img src="https://cdn-icons-png.flaticon.com/512/39/39220.png" class="icon-delete-img" /></button>
   {{/each}}
 
 
@@ -155,6 +157,8 @@
           window.location.href = `/products?page=1&limit=10`;
           
         }
+
+      interfazPremium(role);
     });
 
 
@@ -200,45 +204,156 @@ async function goToCart (userId, cartId){
 
 }
 
- const role = document.querySelector('.b-role').innerText;
- console.log('role:', role)
- const linkPremium = document.querySelector('.link-for-premium');
- const btnsDelete = document.querySelectorAll('.btn-delete-product');
+const role = document.querySelector('.b-role').innerText;
 
- if(role === 'premium'){
-    linkPremium.innerHTML = '<a href="http://localhost:8080/add-new-product"> Agregar nuevo producto</a>';
-    btnsDelete.forEach((btn) => {
-      btn.style.display = 'block';
-    })
+
+
+
+async function interfazPremium(role) {
+  const linkPremium = document.querySelector('.link-for-premium');
+  const btnsDelete = document.querySelectorAll('.btn-delete-product');
+
+  if(role === 'premium'){
+    linkPremium.innerHTML = `<a href="http://localhost:8080/add-new-product" class="a-premium">
+                               <img src="https://cdn-icons-png.flaticon.com/512/189/189689.png" class="add-product-icon" /> Agregar nuevo producto</a>`;
+    
+    
+      btnsDelete.forEach((btn) => {
+        btn.style.display = 'block';
+      });
+      
     
  }
+}
+
+
+
+ 
+
+
 
 
 
  //Eliminar productos (solo usuarios premium)
 
- async function deleteProduct(pid) {
-  try{
-    console.log('soy un botón elimino el producto con id: ', pid)
-    const url = `/api/products/${pid}`;
-    const response = await fetch(url, {
-      method: 'DELETE',
-    });
 
-    if(response.ok) {
-      Swal.fire({
-        icon: 'success',
-        title: `Producto con id: ${pid} Ha sido eliminado!!!`,
-        showConfirmButton: true,
-        confirmButtonText:'<i class="fa fa-thumbs-up"></i> Great!',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.reload(); //recarga la página
-        } 
-      }); 
-    }
+
+ /*async function deleteProduct(pid, userEmail) {
+  try{
+    console.log('email del usuario', userEmail);
+    Swal.fire({
+      icon: 'success',
+      title: `Eliminar el producto con id: ${pid}`,
+      showConfirmButton: true,
+      showDenyButton: true,
+      confirmButtonText:'<i class="fa fa-thumbs-up"></i> Great!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        const executeDelete = async () => {
+          try{
+            const url = `/api/products/${pid}`;
+            const response = await fetch(url, {
+              method: 'DELETE',
+            });
+
+            console.log(response)
+            if(response.status === 401){
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: response.statusText,
+                footer: '<a href="">Why do I have this issue?</a>'
+              });
+              throw new Error();
+            }
+
+            if(response.ok){
+              window.location.reload(); //recarga la página
+            } 
+          } catch(error) {
+            console.log('error', error)
+          }    
+        };
+        
+        executeDelete();
+      } else {
+        Swal.fire('Changes are not saved', '', 'info');
+      } 
+
+    }); 
+    
   } catch(error){
     console.log(error);
+  }
+ } */ 
+
+ async function deleteProduct(pid, userEmail) {
+  try {
+    console.log('email del usuario', userEmail);
+
+    const result = await Swal.fire({
+      icon: 'success',
+      title: `Eliminar el producto con id: ${pid}`,
+      showConfirmButton: true,
+      showDenyButton: true,
+      confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
+    });
+
+    if (result.isConfirmed) {
+      const executeDelete = async () => {
+        try {
+          const url = `/api/products/${pid}`;
+          const response = await fetch(url, {
+            method: 'DELETE',
+          });
+
+          console.log(response.status)
+          if (response.status === 403) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'No puedes eliminar el producto de otro usuario',
+            });
+            return;
+            //throw new Error();
+          }
+
+          if (response.ok) {
+            window.location.reload(); // recarga la página
+          } else {
+            throw new Error('Error al eliminar el producto.');
+          }
+        } catch (error) {
+          console.log('error', error);
+          Swal.fire('Error', 'Hubo un problema al eliminar el producto', 'error');
+        }
+      };
+
+      await executeDelete();
+    } else {
+      Swal.fire('Changes are not saved', '', 'info');
+    }
+  } catch (error) {
+    console.log(error);
+    Swal.fire('Error', 'Hubo un problema al eliminar el producto', 'error');
+  }
+}
+
+
+ async function changeRole(user_id){
+  const url = `/api/users/premium/${user_id}`
+  const result = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({}),
+  });
+
+  if(result.ok){
+    console.log('role actualizado');
+    window.location.reload();
   }
  }
   

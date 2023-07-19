@@ -2,6 +2,7 @@
 
 <div class="addProductContainer">
     <h1>Agregar nuevo producto</h1>
+    <p class="user-email">{{email}}</p>
     <form class="product-form form-disp">
         <input type="text" id="codep" placeholder="code" />
         <input type="text" id="titlep" placeholder="Nombre del producto" />
@@ -24,7 +25,8 @@
         inputStock = d.getElementById('stockp'),
         inputCategory = d.getElementById('categoryp'),
         inputImg = d.getElementById('imgp'),
-        btnNewProduct = d.getElementById('btn-new-product');
+        btnNewProduct = d.getElementById('btn-new-product'),
+        userEmail = d.querySelector('.user-email');
 
     
     btnNewProduct.addEventListener('click', (e) => {
@@ -49,6 +51,9 @@
         formData.append('stock', newProducto.stock);
         formData.append('category', newProducto.category);
         formData.append('thumbnail', inputImg.files[0]);
+        formData.append('email', userEmail.textContent);
+        
+        //console.log(formData);
 
         const createNewProduct = async () => {
             try{

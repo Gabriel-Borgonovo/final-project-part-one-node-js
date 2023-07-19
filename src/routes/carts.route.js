@@ -12,7 +12,7 @@ route.get('/:cid', cartsController.getCartById.bind(cartsController));
 route.post("/:cid/products/:pid", authenticated, authorized(['user']), cartsController.addProductToCart.bind(cartsController));
 
   //Elimina un producto dentro del carrito
-route.delete('/:cid/products/:pid', cartsController.deleteProductInCart.bind(cartsController));
+route.delete('/:cid/products/:pid', authenticated, authorized(['user']), cartsController.deleteProductInCart.bind(cartsController));
 
 
   //Actualiza el carrito con un nuevo array de productos pasados por el body

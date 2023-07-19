@@ -35,4 +35,6 @@ route.get('/restore-password/form/:email', viewsController.restorePasswordForm.b
 
 route.get('/add-new-product', authenticated, authorized(['premium']), viewsController.addProductForm.bind(viewsController));
 
+route.get('/cambiando', viewsController.changeRoles.bind(viewsController));
+
 export default route;

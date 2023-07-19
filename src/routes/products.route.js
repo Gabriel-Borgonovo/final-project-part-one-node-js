@@ -15,7 +15,7 @@ route.post('/', authenticated, authorized(['premium']), avatarUploader.array('th
 
 route.put('/:pid', productsController.updateProduct.bind(productsController));
 
-route.delete('/:pid', productsController.deleteProduct.bind(productsController));
+route.delete('/:pid', authenticated, authorized(['premium']), productsController.deleteProduct.bind(productsController));
 
 export default route; 
 

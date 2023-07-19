@@ -24,7 +24,7 @@ export function configurePassport() {
       },
       async (req, username, password, done) => {
         try {
-          const { edad, apellido, nombre, cart, role } = req.body;
+          const { edad, apellido, nombre, cart, role, owner } = req.body;
           //console.log(req.body)
           const userExists = await usersModel.findOne({ email: username });
 

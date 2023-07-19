@@ -1,12 +1,15 @@
 import { socketServer } from "../socket/configure-socket.js";
 import ProductsService from '../dao/services/products.service.js';
+import UsersService from "../dao/services/users.service.js";
 
 
 
 class ProductsController {
   #service;
-  constructor(service) {
+  #usersService
+  constructor(service, usersService) {
     this.#service = service;
+    this.#usersService = usersService;
   }
 
   async getAllProducts(req, res, next) {
@@ -47,6 +50,7 @@ class ProductsController {
 
       product.thumbnail = files;
       product.status = true;
+      product.owner = product.email;
 
       socketServer.emit("Product", product);
 
@@ -78,20 +82,25 @@ class ProductsController {
     }
   }
 
+
   async deleteProduct(req, res, next) {
     try {
       const productId = req.params.pid;
       const productToDelete = await this.#service.findById(productId);
       if (!productToDelete) {
-        res
-          .status(404)
-          .send({ error: `Producto con id ${productId} no encontrado` });
+        res.status(404).send({ error: `Producto con id ${productId} no encontrado` });
+        return;
+      }
+      
+      if (productToDelete.owner !== req.user.email) {
+        res.status(403).send({ message: 'No tienes permiso para eliminar el producto' });
         return;
       }
 
+      
       await this.#service.delete(productId);
       socketServer.emit("Productdelete", productToDelete);
-
+  
       res.send({
         ok: true,
         mensaje: `El producto con id ${productId} fue eliminado`,
@@ -102,5 +111,5 @@ class ProductsController {
   }
 }
 
-const controller = new ProductsController(new ProductsService());
+const controller = new ProductsController(new ProductsService(), new UsersService());
 export default controller;

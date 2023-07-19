@@ -194,6 +194,11 @@ input[type="submit"]:hover{
     padding: 20px;
     text-align: center;
     color: rgb(48, 47, 51);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 
 .prod-h2 b{
@@ -568,6 +573,7 @@ button.active{
     font-family: "Segoe UI", "Segoe WP", Arial, sans-serif;
 }
 
+.cart-container-all,
 .product-details{
     background: none;
     height: 100vh;
@@ -609,6 +615,16 @@ button.active{
 
 /*Cart styles*/
 
+.cart-container-all{
+    margin-top: 100px;
+    padding-bottom: 100px;
+    min-height: 100vh;
+    height: max-content;
+    display: block;
+}
+
+
+
 .img-cart{
     width: 100px;
     height: 100px;
@@ -618,14 +634,22 @@ button.active{
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+    display: block;
 }
 
-/* .cart-thead{
+.cart-thead{
+   background-color: #dd1541;
+   color: #ffffff;
+   align-self: center;
+   width: 100%;
+}
+
+/* .cart-tr{
     border: 1px solid black;
 }
 
-.cart-tr{
-    border: 1px solid black;
+.cart-body{
+    width: 100%;
 } */
 
 .cart-th{
@@ -741,14 +765,65 @@ button.active{
 }
 
 .btn-delete-product{
-    background-color: #ad0026;
+    background-color: #dd1541;
     color: #fff;
     border: none;
+    border-radius: 50%;
     padding: 3px 5px;
     cursor: pointer;
     display: none;
+    transition: all .2s linear;
+}
+
+.btn-delete-product:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.693);
+    transform: scale(1.1);
+    border: 1px solid white;
+}
+
+.icon-delete-img{
+    width: 30px;
+    filter: invert(2);
+}
+
+.a-premium{
+    text-decoration: none;
+    font-size: 14px;
+    color: rgb(48, 48, 51);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    align-self: center;
+    width: max-content;
+    transition: all .2s linear;
+}
+
+.a-premium:hover{
+    color: rgb(28, 55, 209);
+}
+
+.add-product-icon{
+    width: 25px;
 }
 
 .footer-h2{
     text-align: center;
+}
+
+.active-btn{
+    display: block;
+}
+
+
+
+
+
+
+
+
+@media screen and (min-width:950px) {
+    .cart-table{
+        width: 50%;
+    }    
 }
