@@ -22,6 +22,24 @@ const usersSchema = new mongoose.Schema({
     role: {
         type: String,
         default: 'user'
+    },
+    documents: {
+        type: [
+            {
+                name: { type: String },
+                reference: { type: String },
+            }
+        ],
+        default: [
+            {
+                name: 'Nombre del documento',
+                reference: 'Link al documento',
+            }
+        ]
+    },
+    last_connection: {
+        type: String,
+        default: 'Desconectado',
     }
 });
 
