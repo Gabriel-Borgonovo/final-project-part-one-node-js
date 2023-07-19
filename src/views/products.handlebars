@@ -91,271 +91,36 @@
   {{>footer}}
 </div>
 
-
+<script src="/js/productsHandlebars/deleteProduct.js"></script>
+<script src="/js/productsHandlebars/interfacePremium.js"></script>
+<script src="/js/productsHandlebars/logout.js"></script>
+<script src="/js/productsHandlebars/roles.js"></script>
+<script src="/js/productsHandlebars/buttonsPaginate.js"></script>
+<script src="/js/productsHandlebars/pagination.js"></script>
+<script src="/js/productsHandlebars/redirections.js"></script>
 
 <script>
   //import api from '../public/js/api.js';
   const query = new URLSearchParams(window.location.search); //me devuelve lo que tengo en la url
   const category = 'proteinas';
+  const role = document.querySelector('.b-role').innerText;
+  const totalPages = {{totalPages}};
+  const currentPage = {{page}};
 
+  document.addEventListener('DOMContentLoaded', function(){
+    renderButtonPage()
 
-  function setCategory(category = ''){
-      query.set('category', category);
-      query.set('page', 1);
-      query.set('limit', 10);
-      window.location.search = query.toString();
-    }
-
-  function setLimit(limit){
-    query.set('limit', limit);
-    query.set('page', 1);
-    window.location.search = query.toString();
-    }
-
-   
-/*Números para navegar a páginas determinadas**/
-  function setPaginate(page){
-    query.set('page', page);
-    window.location.search = query.toString();
-  }
-
-  function setPrice(order){
-    query.set('sort', order);
-    window.location.search = query.toString();
-  }
-
-    function renderButtonPage(){
-      const totalPages = {{totalPages}};
-      const currentPage = {{page}};
-      const btnsPages = document.getElementById("btns-pages");
-
-      console.log('total pages: ', totalPages);
-      console.log('página actual: ', currentPage);
-
-      for(let i = 1; i <= totalPages; i++){
-      const button = document.createElement('button');
-      button.innerText = i.toString();
-      button.onclick = function(){
-        setPaginate(i);
-      }
-      if(i === currentPage){
-        button.classList.add('active');
-      }
-      btnsPages.appendChild(button);
-    }
-
-    }
-
-     document.addEventListener('DOMContentLoaded', function(){
-      renderButtonPage()
-
-      const currentPage = parseInt(query.get('page'));
-      const totalPages = {{totalPages}};
-      if (currentPage > totalPages || currentPage <= 0) {
-        // redirigir a productos
-          alert('Página inexistente');
-          window.location.href = `/products?page=1&limit=10`;
+    const currentPage = parseInt(query.get('page'));
+    const totalPages = {{totalPages}};
+    if (currentPage > totalPages || currentPage <= 0) {
+      // redirigir a productos
+        alert('Página inexistente');
+        window.location.href = `/products?page=1&limit=10`;
           
-        }
+      }
 
       interfazPremium(role);
-    });
-
-
-    /*go to details*/
-
-    function goDetails(id) {
-      const url = "/products/" + id;
-      window.location.href = url;
-}
-
-
-
-
-
-async function logout() {
-  
-  //api.post('/api/auth/logout');
-    const response = await fetch('/api/auth/logout', {
-            method: 'POST',
-            body: JSON.stringify({}), // cuerpo vacío
-            headers: {   
-                'Content-Type': 'application/json',       
-            },
-        });
-        
-        if(response.redirected){
-            console.log(response);
-            window.location.replace(response.url);
-        }
-    
-        if(response.ok){
-            return response.json();
-            }
-        response.json().then( d => alert(JSON.stringify(d)));
-  }
-
-
-/*enviar datos del carrito*/
-
-async function goToCart (userId, cartId){
-  const url = "/cart/" + userId + "/" + cartId;
-  window.location.href = url;
-
-}
-
-const role = document.querySelector('.b-role').innerText;
-
-
-
-
-async function interfazPremium(role) {
-  const linkPremium = document.querySelector('.link-for-premium');
-  const btnsDelete = document.querySelectorAll('.btn-delete-product');
-
-  if(role === 'premium'){
-    linkPremium.innerHTML = `<a href="http://localhost:8080/add-new-product" class="a-premium">
-                               <img src="https://cdn-icons-png.flaticon.com/512/189/189689.png" class="add-product-icon" /> Agregar nuevo producto</a>`;
-    
-    
-      btnsDelete.forEach((btn) => {
-        btn.style.display = 'block';
-      });
-      
-    
- }
-}
-
-
-
- 
-
-
-
-
-
- //Eliminar productos (solo usuarios premium)
-
-
-
- /*async function deleteProduct(pid, userEmail) {
-  try{
-    console.log('email del usuario', userEmail);
-    Swal.fire({
-      icon: 'success',
-      title: `Eliminar el producto con id: ${pid}`,
-      showConfirmButton: true,
-      showDenyButton: true,
-      confirmButtonText:'<i class="fa fa-thumbs-up"></i> Great!',
-    }).then((result) => {
-      if (result.isConfirmed) {
-
-        const executeDelete = async () => {
-          try{
-            const url = `/api/products/${pid}`;
-            const response = await fetch(url, {
-              method: 'DELETE',
-            });
-
-            console.log(response)
-            if(response.status === 401){
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: response.statusText,
-                footer: '<a href="">Why do I have this issue?</a>'
-              });
-              throw new Error();
-            }
-
-            if(response.ok){
-              window.location.reload(); //recarga la página
-            } 
-          } catch(error) {
-            console.log('error', error)
-          }    
-        };
-        
-        executeDelete();
-      } else {
-        Swal.fire('Changes are not saved', '', 'info');
-      } 
-
-    }); 
-    
-  } catch(error){
-    console.log(error);
-  }
- } */ 
-
- async function deleteProduct(pid, userEmail) {
-  try {
-    console.log('email del usuario', userEmail);
-
-    const result = await Swal.fire({
-      icon: 'success',
-      title: `Eliminar el producto con id: ${pid}`,
-      showConfirmButton: true,
-      showDenyButton: true,
-      confirmButtonText: '<i class="fa fa-thumbs-up"></i> Great!',
-    });
-
-    if (result.isConfirmed) {
-      const executeDelete = async () => {
-        try {
-          const url = `/api/products/${pid}`;
-          const response = await fetch(url, {
-            method: 'DELETE',
-          });
-
-          console.log(response.status)
-          if (response.status === 403) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'No puedes eliminar el producto de otro usuario',
-            });
-            return;
-            //throw new Error();
-          }
-
-          if (response.ok) {
-            window.location.reload(); // recarga la página
-          } else {
-            throw new Error('Error al eliminar el producto.');
-          }
-        } catch (error) {
-          console.log('error', error);
-          Swal.fire('Error', 'Hubo un problema al eliminar el producto', 'error');
-        }
-      };
-
-      await executeDelete();
-    } else {
-      Swal.fire('Changes are not saved', '', 'info');
-    }
-  } catch (error) {
-    console.log(error);
-    Swal.fire('Error', 'Hubo un problema al eliminar el producto', 'error');
-  }
-}
-
-
- async function changeRole(user_id){
-  const url = `/api/users/premium/${user_id}`
-  const result = await fetch(url, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({}),
   });
 
-  if(result.ok){
-    console.log('role actualizado');
-    window.location.reload();
-  }
- }
-  
 </script>
    
