@@ -263,6 +263,18 @@ class ViewsController {
     }
   }
 
+  async uploadDocs(req, res, next) {
+    try {
+      console.log('usuario de session', req.user)
+      const email = req.user.email;
+      res.render('document', {
+        styles: 'styles',
+      })
+    } catch (error) {
+      next(error);
+    }
+  }
+
 }
 
 const controller = new ViewsController(new UsersService(), new CartsService(), new ProductsService());

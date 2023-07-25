@@ -46,6 +46,15 @@ class UsersController {
       next(error);
     }
   }
+
+  async uploadDocuments(req, res, next) {
+    try {
+      const { uid } = req.params;
+      console.log('uid', uid);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 const controller = new UsersController(new UsersService());

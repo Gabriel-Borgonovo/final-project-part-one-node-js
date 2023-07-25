@@ -37,4 +37,6 @@ route.get('/add-new-product', authenticated, authorized(['premium']), viewsContr
 
 route.get('/cambiando', viewsController.changeRoles.bind(viewsController));
 
+route.get('/upload-docs', authenticated, authorized(['user']), viewsController.uploadDocs.bind(viewsController));
+
 export default route;

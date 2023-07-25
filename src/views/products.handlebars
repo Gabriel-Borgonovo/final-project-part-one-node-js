@@ -42,8 +42,13 @@
 </aside>
 
 
-  <h2 class="prod-h2"><span>Usuario: <b class="b-role">{{role}}</b></span> <b class="link-for-premium">Conoce nuestros productos !!!</b>
-  <button onclick="changeRole('{{user_id}}')">Cambiar role</button></h2>
+  <div class="prod-h2">
+    <span>Usuario: <b class="b-role">{{role}}</b></span> 
+    <b class="link-for-premium">Conoce nuestros productos !!!</b>
+    <button onclick="changeRole('{{user_id}}')">Cambiar role</button> 
+    <a href="http://localhost:8080/upload-docs" target="_blank">Cargar documentos</a>
+  </div>
+  
   
   <section class="cards-container">
 
@@ -98,6 +103,7 @@
 <script src="/js/productsHandlebars/buttonsPaginate.js"></script>
 <script src="/js/productsHandlebars/pagination.js"></script>
 <script src="/js/productsHandlebars/redirections.js"></script>
+<script src="/js/productsHandlebars/btnUpload.js"></script>
 
 <script>
   //import api from '../public/js/api.js';
