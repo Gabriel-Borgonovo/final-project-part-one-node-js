@@ -12,15 +12,12 @@ async function send(event){
 
     const userRole = document.getElementById('use').checked;
     const adminRole = document.getElementById('adm').checked;
-    const premiumRole = document.getElementById('prem').checked;
 
     if (userRole) {
         role = 'user';
       } else if (adminRole) {
         role = 'admin';
-      } else if (premiumRole) {
-        role = 'premium'
-      }
+      } 
 
     api.post('/api/auth/register', {
         nombre,
@@ -31,12 +28,7 @@ async function send(event){
         role
     }).then((d) => {
         alert('Usuario Registrado');
-        // document.getElementById('form-name').value = '';
-        // document.getElementById('form-lastName').value = '';
-        // document.getElementById('form-email').value = '';
-        // document.getElementById('form-age').value = '';
-        // document.getElementById('form-password').value = '';
-
+        
         window.location.href = '/login';
     });
 

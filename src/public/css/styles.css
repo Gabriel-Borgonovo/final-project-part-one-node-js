@@ -224,6 +224,7 @@ input[type="submit"]:hover{
 }
 
 .card{
+    overflow: hidden;
     background-color: #fff;
     border: .3px solid rgba(0, 0, 0, 0.152);
     border-radius: 10px;
@@ -265,15 +266,20 @@ input[type="submit"]:hover{
     margin: 20px;
 }
 
+.h3-chat{
+    text-align: center;
+    color: #6e6e6e;
+}
+
 .container-mensajes{
     overflow-y: auto;
     margin-top: 20px;
     width: 90%;
-    max-width: 800px;
+    max-width: 700px;
     padding: 10px;
     margin-left: auto;
     margin-right: auto;
-    height: 50vh;
+    height: 40vh;
     background-color: rgb(255, 255, 255);
     border-radius: 20px;
     border: .1px solid rgba(0, 0, 0, 0.2);
@@ -306,6 +312,7 @@ input[type="submit"]:hover{
     justify-content: center;
     align-items: center;
     padding: 20px;
+    margin-bottom: 100px;
 }
 
 .btn-send-msg{
@@ -334,7 +341,7 @@ input[type="submit"]:hover{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 30px;
+    padding-top: 30px;
 }
 
 .connected{
@@ -818,9 +825,113 @@ button.active{
 
 
 
+.premium-link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    background-color: rgba(28, 55, 209, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: all .3s linear;
+}
+
+.premium-link i{
+    font-size: 25px;
+    color: #ffffff;
+    text-shadow: 0 0 3px black;
+}
+
+.premium-link span{
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 0 3px black;
+}
+
+.premium-link:hover{
+    background-color: rgb(28, 55, 209);;
+}
 
 
+/**Pagina para cargar documentos*/
 
+.container-docs{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.img-dni{
+    width: 300px;
+}
+
+.div-con-formulario{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: rgb(28, 55, 209);
+    box-shadow: 4px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.cont-form-documentos{
+    padding: 20px;
+}
+
+.cont-form-documentos,
+.form-documentos{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+    color: #fff;
+}
+
+.form-documentos h2 {
+    font-size: 18px;
+}
+
+
+.p-owner{
+    font-size: 12px;
+    padding-top: 10px;
+    width: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.custom-file-input{
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 10px;
+    transition: all, .3s ease;
+}
+
+.custom-file-input:hover{
+    background-color: #ffffff18;
+}
+
+.send-document-pdf{
+    padding: 7px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.508);
+    border: none;
+    background-color: #fff;
+    transition: all .3s ease;
+}
+
+.send-document-pdf:hover{
+    background-color: #ffffff60;
+    color: #fff;
+}
 
 @media screen and (min-width:950px) {
     .cart-table{

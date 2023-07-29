@@ -51,6 +51,32 @@ class UsersController {
     try {
       const { uid } = req.params;
       console.log('uid', uid);
+
+      const fileName = req.files?.map((file) => file.filename);
+
+      if (fileName.length === 0) {
+        return res
+          .status(400)
+          .send({ status: "error", error: "No se pudo cargar el documento" });
+      }
+
+      const fileExtension = fileName[0].slice(-3);
+      if (fileExtension.toLowerCase() !== 'pdf') {
+        return res.status(400).send({ status: "error", error: "El archivo debe ser de formato PDF" });
+      }
+
+      const user = await this.#service.findById(uid);
+
+      if (user.documents && user.documents.length > 0) {
+        user.documents[0].name = fileName[0];
+        user.documents[0].reference = `/src/public/documents/${fileName[0]}`;
+        user.role = 'premium';
+      }
+
+      await this.#service.update(uid, user);
+
+      res.status(200).send({message: 'Usuario actualizado', user: user});
+
     } catch (error) {
       next(error);
     }

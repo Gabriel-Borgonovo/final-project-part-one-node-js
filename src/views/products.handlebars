@@ -44,9 +44,6 @@
 
   <div class="prod-h2">
     <span>Usuario: <b class="b-role">{{role}}</b></span> 
-    <b class="link-for-premium">Conoce nuestros productos !!!</b>
-    <button onclick="changeRole('{{user_id}}')">Cambiar role</button> 
-    <a href="http://localhost:8080/upload-docs" target="_blank">Cargar documentos</a>
   </div>
   
   
@@ -60,14 +57,14 @@
   {{#each products}}
   <div class="card" onclick="goDetails('{{_id}}')">
     {{#each thumbnail}}
-      <img src="/img/{{this}}" alt="{{this}}" class="product-img"/>
+      <img src="/img/products/{{this}}" alt="{{this}}" class="product-img"/>
     {{/each}}
     <div class="card-body">
       <h5 class="card-title">{{title}}</h5>
       <p class="card-text">{{description}}</p>
       <p class="card-price">${{price}}</p>
       <p class="card-price">{{category}}</p>
-      <p class="card-price" id="owner-text">{{owner}}</p>
+      <p class="card-price p-owner" id="owner-text">{{owner}}</p>
     </div>
   </div>
   <button class="btn-delete-product" onclick="deleteProduct('{{_id}}')"><img src="https://cdn-icons-png.flaticon.com/512/39/39220.png" class="icon-delete-img" /></button>

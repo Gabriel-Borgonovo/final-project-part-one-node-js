@@ -102,7 +102,12 @@ class ViewsController {
   }
 
   async getChat(req, res, next) {
+    const { email, nombre, apellido } = req.user;
+
     res.render("chat", {
+      email: email,
+      name: nombre,
+      lastName: apellido,
       styles: "styles",
     });
   }
@@ -265,10 +270,21 @@ class ViewsController {
 
   async uploadDocs(req, res, next) {
     try {
-      console.log('usuario de session', req.user)
-      const email = req.user.email;
+      //console.log('usuario de session', req.user)
+      const user = req.user;
+      const userDb = await this.#usersService.findByEmail(user.email);
+      if(!userDb){
+        res.status(404).send({ error: 'error', message: 'User Not found' })
+      }
+
+      const user_id = userDb._id;
+
       res.render('document', {
         styles: 'styles',
+        email: user.email,
+        name: user.nombre,
+        lastName: user.apellido,
+        user_id: user_id,
       })
     } catch (error) {
       next(error);

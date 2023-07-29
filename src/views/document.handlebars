@@ -1,8 +1,24 @@
+{{>navbar}}
+
 <div class="container-docs">
+    <p>{{email}}</p>
     <h1>Pasate a Usuario Premium</h1>
-    <form>
-        <input type="file" placeholder="fotocopia de DNI" />
-    </form>
-    <button onclick="uploadDocuments()"> ver req.session.user</button>
+    
+    <div class="div-con-formulario">
+        <img src="https://img.freepik.com/vector-premium/tarjeta-identificacion-datos-informacion-personal-documento-identidad-foto-persona-clipart-texto-aislado-sobre-fondo-blanco-ilustracion-vectorial-eps-10_230920-1004.jpg?w=2000" alt="dni image" class="img-dni" />
+        <div class="cont-form-documentos">
+            <form class="form-documentos">
+                <h2>Subí la fotocopia de tu DNI</h2>
+                <label for="dni-user" class="custom-file-input">
+                    <i class="fa fa-cloud-upload"></i> Subir archivo
+                </label>
+                <input type="file" id="dni-user" style="display: none;" />  
+            </form>
+            <button onclick="uploadDocuments('{{user_id}}')" class="send-document-pdf">Enviar</button>
+        </div>
+    </div>
+    
 </div>
+{{>footer}}
 <script src="/js/productsHandlebars/btnUpload.js"></script>
+

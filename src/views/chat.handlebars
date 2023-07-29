@@ -1,22 +1,20 @@
 {{>navbar}}
 <div>
-    <h2 class="h2-chat">chat sockets</h2>
+    <h2 class="h2-chat">Chat</h2>
 </div>
-<form class="form-input-chat form-email">
-   <input type="email" placeholder="Ingresa tu email" id="user-email" class="input-chat input-email" required/> 
-</form>
 
+<h3 class="h3-chat">{{email}}</h3>
 
 <div id="mensajes" class="container-mensajes"></div>
 
 <form class="form-input-chat">
-    
     <input type="text"  class="input-chat" id="chat-box"/>
-    <div class="container-btn-send-msg">
-        <input type="submit" class="btn-send-msg" id="btn-msg" />
-    </div>
 </form>
+<div class="container-btn-send-msg">
+    <button onclick="sendMessageChat('{{email}}')" class="btn-send-msg" id="btn-msg" >Enviar</button>
+</div>
 
+{{>footer}}
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/socket.io/socket.io.js"></script>
