@@ -4,7 +4,7 @@
             <a href="/">Inicio</a>
         </li>
         <li class="li-navbar">
-            <a href="/chat">Chat</a>
+            <button class="a-navbar" onclick="goToChat()">Chat</button>
         </li>
         <li class="li-navbar">
             <a href="/login">login</a>
@@ -16,3 +16,26 @@
     </div>
     
 </nav>
+
+<script>
+    async function goToChat() {
+        const url = '/chat';
+        try{
+            const response = await fetch(url, {
+                method: 'GET',
+            });
+
+            if(response.ok){
+                window.location.href = url;
+            } else if(response.status === 403){
+                const responseToJson = await response.json();
+                Swal.fire({
+                    icon: 'error',
+                    text: responseToJson.message,
+                });
+            }
+        }catch(error){
+            console.log(error);
+        }
+    }
+</script>

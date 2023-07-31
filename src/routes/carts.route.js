@@ -24,7 +24,7 @@ route.put('/:cid/products/:pid', cartsController.updateQuantity.bind(cartsContro
 //Elimina todos los productos del carrito
 route.delete('/:cid', cartsController.deleteAllProductsInCart.bind(cartsController));
 
-route.post('/:cid/purchase', authenticated, authorized(['user']), cartsController.generateTicket.bind(cartsController));
+route.put('/:cid/products/:pid/restar-cantidad', cartsController.restQuantity.bind(cartsController));
 
 
 export default route; 

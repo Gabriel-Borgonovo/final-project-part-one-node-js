@@ -46,6 +46,9 @@ class CartsController {
       let cart = await this.#cartService.findById(cid);
       const product = await this.#productsService.findById(pid);
 
+      product.stock--;
+      await this.#productsService.update(pid, product);
+
       // Verificar si el producto ya existe en el carrito
       const productIndex = cart.products.findIndex(
         (p) => String(p.product._id) === pid
@@ -118,11 +121,8 @@ class CartsController {
   async updateQuantity(req, res, next) {
     try {
       const { cid, pid } = req.params;
-      const { product, quantity } = req.body;
-
       const cart = await this.#cartService.findById(cid);
-
-      const cartProduct = cart.products.find((p) => p.product._id.equals(pid));
+      const cartProduct = cart.products.find((p) => p._id.equals(pid));
 
       if (!cartProduct) {
         return res
@@ -130,14 +130,23 @@ class CartsController {
           .send({ error: "Producto no encontrado en el carrito" });
       }
 
-      // Verificar que los IDs coincidan
-      if (cartProduct.product._id.toString() !== product) {
+      //suma la cantidad de uno en uno y le resta al stock del producto en la base de datos
+      if(cartProduct.quantity >= 1 && cartProduct.product.stock !== 0){
+        cartProduct.quantity ++;
+        cartProduct.total = cartProduct.quantity * cartProduct.product.price;
+
+        const p_id = cartProduct.product._id; 
+        const productWithMinusQuantity = await this.#productsService.findById(p_id);
+        productWithMinusQuantity.stock--;
+
+        await this.#productsService.update(p_id, productWithMinusQuantity);
+
+      
+      } else {
         return res
           .status(400)
-          .send({ error: "No se permite cambiar el ID del producto" });
+          .send({ error: "No hay más en stock"});
       }
-
-      cartProduct.quantity = quantity;
 
       await this.#cartService.update(cid, cart);
 
@@ -146,6 +155,48 @@ class CartsController {
       next(error);
     }
   }
+
+
+  async restQuantity(req, res, next) {
+    try {
+      const { cid, pid } = req.params;
+      //console.log(cid, pid);
+      const cart = await this.#cartService.findById(cid);
+      const cartProduct = cart.products.find((p) => p._id.equals(pid));
+
+      if (!cartProduct) {
+        return res
+          .status(404)
+          .send({ error: "Producto no encontrado en el carrito" });
+      }
+
+      if(cartProduct.quantity > 1 ){
+        cartProduct.quantity --;
+        cartProduct.total = cartProduct.quantity * cartProduct.product.price;
+
+        const p_id = cartProduct.product._id; 
+        const productWithPlusQuantity = await this.#productsService.findById(p_id);
+        productWithPlusQuantity.stock++;
+
+        await this.#productsService.update(p_id, productWithPlusQuantity);
+
+      
+      } else {
+        return res
+          .status(400)
+          .send({ error: "No hay más en stock"});
+      }
+
+      await this.#cartService.update(cid, cart);
+
+      res.send(cart);
+
+    } catch (error) {
+      next(error);
+    }
+  }
+
+
 
   async deleteAllProductsInCart(req, res, next) {
     try {
@@ -173,77 +224,9 @@ class CartsController {
 
 
 
-  async generateTicket(req, res, next) {
-    try {
-      const { cid } = req.params;
-      //console.log('cid ticket function', cid)
+ 
 
-      // Verificar si el carrito existe
-      const cart = await this.#cartService.findById(cid);
-      if (!cart) {
-        return res.status(404).json({ error: "Carrito no encontrado" });
-      }
-      //console.log('cart', cart)
 
-      // Crear el ticket
-      const ticketData = {
-        code: generateUniqueCode(), // Genera un código único para el ticket
-        purchase_datetime: new Date(),
-        amount: calculateTotalAmount(cart.products), // Calcula el monto total de la compra
-        purchaser: req.user.email, // Puedes ajustar esto según la estructura de tu usuario
-      };
-
-      //console.log('ticket data', ticketData)
-
-      // Generar el ticket utilizando el servicio TicketService
-      const ticket = await this.#ticketService.generateTicket(ticketData);
-      //console.log('ticket', ticket)
-
-       // Restar el stock de los productos comprados
-      //await this.subtractStockFromProducts(cart.products);
-      const failedProducts = await this.subtractStockFromProducts(cart.products);
-
-       // Filtrar los productos que no pudieron comprarse
-      const remainingProducts = cart.products.filter(productItem => !failedProducts.includes(productItem.product));
-
-      // Actualizar los productos del carrito con los productos no procesados
-      await this.#cartService.updateProducts(cid, remainingProducts);
-
-       // Retornar la respuesta con el ticket generado
-       res.status(200).json({ ticket: ticket, products: failedProducts });
-
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async subtractStockFromProducts(products) {
-    const failedProducts = [];
-    
-    // Recorrer los productos del carrito y restar el stock
-    for (const productItem of products) {
-      const product = await this.#productsService.findById(productItem.product);
-      //console.log('producttototo', product)
-      
-      if (product && product._id) {
-        // Verificar si hay suficiente stock para la cantidad indicada
-        if (product.stock >= productItem.quantity) {
-          product.stock -= productItem.quantity;
-          const productId = product._id.toString()
-          const productsupdated = await this.#productsService.update(productId, product);
-          return productsupdated;
-        } else {
-          // Si no hay suficiente stock, agregar el ID del producto a los no procesados
-          failedProducts.push(product._id);
-        }
-      } else {
-        // Si el producto no existe o no tiene un ID válido, agregar el ID del producto a los no procesados
-        failedProducts.push(productItem.product);
-      }
-    }
-    
-    return failedProducts;
-  }
 
 
 }
@@ -254,24 +237,3 @@ export default controller;
 
 
 
-// Función para generar un código único para el ticket
-function generateUniqueCode() {
-  const timestamp = new Date().getTime();
-  const randomNum = Math.floor(Math.random() * 1000); // Número aleatorio entre 0 y 999
-
-  const uniqueCode = `${timestamp}${randomNum}`;
-  return uniqueCode;
-}
-
-// Función para calcular el monto total de la compra en base a los productos del carrito
-function calculateTotalAmount(products) {
-  const products2 = products
-  //console.log('products', products2)
-  let totalAmount = 0;
-  for (const productItem of products2) {
-    const product = productItem.product;
-    const quantity = productItem.quantity;
-    totalAmount += product.price * quantity;
-  }
-  return totalAmount;
-}

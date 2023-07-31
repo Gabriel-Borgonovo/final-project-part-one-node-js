@@ -2,3 +2,6 @@
 {"level":"error","message":"Error","timestamp":"2023-06-08T12:30:35.506Z"}
 {"_message":"products validation failed","errors":{"title":{"kind":"required","message":"Path `title` is required.","name":"ValidatorError","path":"title","properties":{"message":"Path `title` is required.","path":"title","type":"required"}}},"level":"error","message":"products validation failed: title: Path `title` is required.","name":"ValidationError","timestamp":"2023-07-14T19:28:03.178Z"}
 {"_message":"products validation failed","errors":{"title":{"kind":"required","message":"Path `title` is required.","name":"ValidatorError","path":"title","properties":{"message":"Path `title` is required.","path":"title","type":"required"}}},"level":"error","message":"products validation failed: title: Path `title` is required.","name":"ValidationError","timestamp":"2023-07-14T19:31:13.478Z"}
+{"code":66,"index":0,"level":"error","timestamp":"2023-07-30T22:03:25.279Z"}
+{"code":66,"index":0,"level":"error","timestamp":"2023-07-30T22:20:47.237Z"}
+{"code":66,"index":0,"level":"error","timestamp":"2023-07-30T22:26:02.698Z"}

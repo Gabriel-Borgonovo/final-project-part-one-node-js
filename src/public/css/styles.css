@@ -172,6 +172,7 @@ input[type="submit"]:hover{
     padding: 20px 5px;
 }
 
+.a-navbar,
 .li-navbar a{
     text-decoration: none;
     color: rgb(255, 255, 255);
@@ -179,7 +180,11 @@ input[type="submit"]:hover{
     cursor: pointer;
 }
 
-
+.a-navbar{
+    background: none;
+    border: none;
+    font-size: 16px;
+}
 
 .h1-index-hbs{
     color: rgb(255, 255, 255);
@@ -669,6 +674,52 @@ button.active{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.233);
 }
 
+/**Botones del carrito para aumentar y disminuir la cantidad*/
+.section-quantity{
+    padding-top: 25px;
+    padding-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 7px;
+}
+
+.more-minus-btns{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.btn-quantity{
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+    width: 20px;
+    border-radius: 50%;
+    
+}
+
+.btn-plus{
+   background-color: rgb(73, 255, 73);
+}
+
+.btn-minus{
+    background-color: rgb(255, 63, 63);
+}
+
+.p-quantity{
+    font-size: 18px;
+    font-weight: 700;
+    color: #515152;
+}
+
 /*Boton de autenticación por github*/
 .btn_github{
     color: #fff;
@@ -932,6 +983,9 @@ button.active{
     background-color: #ffffff60;
     color: #fff;
 }
+
+
+
 
 @media screen and (min-width:950px) {
     .cart-table{

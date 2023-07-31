@@ -10,6 +10,7 @@
                 <th class="cart-th">Producto</th>
                 <th class="cart-th">Cantidad</th>
                 <th class="cart-th">Precio</th>
+                <th class="cart-th">Total</th>
                 <th class="cart-th">Acciones</th>
             </tr>
         </thead>
@@ -21,8 +22,15 @@
                 <td><img src="/img/products/{{this}}" alt="{{this}}" class="img-cart"></td>
                 {{/each}}
                 <td>{{this.title}}</td>
-                <td>{{this.quantity}}</td>
-                <td>{{this.price}}</td>
+                <td class="section-quantity">
+                  <p class="p-quantity">{{this.quantity}}</p>
+                  <div class="more-minus-btns">
+                    <button class="btn-quantity btn-plus" data-product-id="{{this._id}}">+</button>
+                    <button class="btn-quantity btn-minus" data-product-id="{{this._id}}">-</button>
+                  </div>
+                </td>
+                <td>${{this.price}}</td>
+                <td>${{this.total}}</td>
                 <td><button class="btn-delete-product active-btn" onclick="deleteProductFromCart('{{this._id}}')"><img src="https://cdn-icons-png.flaticon.com/512/39/39220.png" class="icon-delete-img" /></button></td>
             </tr>
             {{/each}}
@@ -37,7 +45,7 @@
     </table>
     <div class="container-go-products">
         <a href="/products" class="btn-send-msg btn-go-products">Go to Products</a>
-        <button class="btn-send-msg btn-go-products" onclick="generateTicket('{{cart_id}}')">Generar Ticket</button>
+        <button class="btn-send-msg btn-go-products" id="cart-id" onclick="generateTicket('{{cart_id}}')">Generar Ticket</button>
     </div>
     
 
@@ -47,30 +55,91 @@
    
 </div> 
 {{>footer}} 
+
+
 <script>
-  function generateTicket(cart_id) {
-    // Realiza la solicitud para generar el ticket
-    const cid = cart_id
-    console.log('cid', cid)
-    /*fetch(`/api/carts/${cid}/purchase`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-       body: JSON.stringify({}) 
-    })
-      .then(response => response.json())
-      .then(data => {
-        // Maneja la respuesta de la solicitud
-        //console.log("Ticket generado:", data.ticket);
-        //console.log('ticket type, ', typeof data.ticket._id)
-        // Redirecciona a la página del ticket generado
-        window.location.href = `/api/ticket/${data.ticket._id}`;
-      })
-      .catch(error => {
-        console.error("Error al generar el ticket:", error);
-      });*/
-  }
+
+async function updateQuantity() {
+  const cartId = "{{cart_id}}";
+  console.log('cart id', cartId);
+  const btnsPlus = document.querySelectorAll('.btn-plus');
+  //const btnsMinus = document.querySelectorAll('')
+  
+  let product_id;
+  btnsPlus.forEach((btn) => { 
+    btn.addEventListener('click', async () => {
+      product_id = btn.getAttribute("data-product-id");
+      console.log('product id al hacer click', product_id);
+      const url = `/api/carts/${cartId}/products/${product_id}`;
+      const data = {
+        product: product_id
+      }
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if(response.ok){
+        console.log('info enviada');
+        window.location.reload();
+      }
+
+      if(response.status === 400) {
+        btn.style.backgroundColor = 'grey';
+        btn.disabled = true
+        alert('No hay más en stock')
+      }
+
+    });
+  });
+}
+
+updateQuantity();
+
+
+async function restarQuantity() {
+  const cartId = "{{cart_id}}";
+  console.log('cart id', cartId);
+  const btnsMinus = document.querySelectorAll('.btn-minus');
+  //const btnsMinus = document.querySelectorAll('')
+  
+  let product_id;
+  btnsMinus.forEach((btn) => { 
+    btn.addEventListener('click', async () => {
+      product_id = btn.getAttribute("data-product-id");
+      console.log('product id al hacer click', product_id);
+      const url = `/api/carts/${cartId}/products/${product_id}/restar-cantidad`;
+      const data = {
+        product: product_id
+      }
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if(response.ok){
+        console.log('info enviada');
+        window.location.reload();
+      }
+
+      if(response.status === 400) {
+        btn.style.backgroundColor = 'grey';
+        btn.disabled = true
+        alert('No se puede restar más')
+      }
+
+    });
+  });
+}
+
+restarQuantity();
+ 
 
   async function deleteProductFromCart(pid) {
     const currentURL = window.location.href;

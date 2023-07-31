@@ -153,12 +153,15 @@ class ViewsController {
 
       //const cart = await cartsManager.getCartById(cart_id);
       const cart = await this.#cartsService.findById(cart_id);
+      //console.log('cart desde views', cart)
+      
       const products = cart.products.map((product) => {
         return {
           img: product.product.thumbnail,
           title: product.product.title,
           price: product.product.price,
           quantity: product.quantity,
+          total: product.total,
           _id: product._id,
         };
       });

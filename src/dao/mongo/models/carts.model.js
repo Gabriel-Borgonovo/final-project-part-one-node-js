@@ -12,6 +12,10 @@ const cartsSchema = new mongoose.Schema({
                     ref: productsCollection,
                     },
                quantity: Number,
+               total: {
+                    type: Number,
+                    default: 0,
+               }
           }
         ],
         default: []          
