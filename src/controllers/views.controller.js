@@ -260,9 +260,9 @@ class ViewsController {
     }
   }
 
-  async changeRoles(req, res, next){
+  async pagarCompra(req, res, next){
     try {
-      res.render('changeRole', {
+      res.render('pagar', {
         styles: 'styles',
       })
     } catch (error) {

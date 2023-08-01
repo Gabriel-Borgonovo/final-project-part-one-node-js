@@ -58,16 +58,7 @@ class CartsController {
         // Si el producto no existe, agregarlo con una cantidad de 1
         cart.products.push({ product: product._id, quantity: 1 });
 
-        console.log(cart)
-        
-        // const totalPrice = product.price;
-        // cart.total = totalPrice;
-
-        const totalPrice = cart.products.reduce((acc, cartProduct) => {
-          return acc + product.price * cartProduct.quantity;
-        }, 0);
-
-        cart.total = totalPrice;
+        cart.total = cart.total + product.price;
 
       } else {
         // Si el producto ya existe, aumentar la cantidad
