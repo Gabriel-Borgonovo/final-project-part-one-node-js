@@ -46,6 +46,7 @@
     <div class="container-go-products">
         <a href="/products" class="btn-send-msg btn-go-products">Go to Products</a>
         <button class="btn-send-msg btn-go-products" id="cart-id" onclick="generateTicket('{{cart_id}}')">Generar Ticket</button>
+        <p>Total de la compra: <b>$<span>{{total}}</span></b></p>
     </div>
     
 
@@ -155,6 +156,10 @@ restarQuantity();
     if(response.ok){
       window.location.reload(); //recarga la página
     }
+  }
+
+  async function calcularTotal() {
+
   }
 </script>
 

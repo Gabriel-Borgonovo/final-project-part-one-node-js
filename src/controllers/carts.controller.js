@@ -45,7 +45,7 @@ class CartsController {
       const quantity = req.body.quantity || 1;
       let cart = await this.#cartService.findById(cid);
       const product = await this.#productsService.findById(pid);
-
+      //console.log('product enviado al carrito', product)
       product.stock--;
       await this.#productsService.update(pid, product);
 
@@ -57,10 +57,23 @@ class CartsController {
       if (productIndex === -1) {
         // Si el producto no existe, agregarlo con una cantidad de 1
         cart.products.push({ product: product._id, quantity: 1 });
+
+        console.log(cart)
+        
+        // const totalPrice = product.price;
+        // cart.total = totalPrice;
+
+        const totalPrice = cart.products.reduce((acc, cartProduct) => {
+          return acc + product.price * cartProduct.quantity;
+        }, 0);
+
+        cart.total = totalPrice;
+
       } else {
         // Si el producto ya existe, aumentar la cantidad
         cart.products[productIndex].quantity += 1;
       }
+
 
       await this.#cartService.update(cid, cart);
 
@@ -74,11 +87,21 @@ class CartsController {
     try {
       const { cid, pid } = req.params;
       const cart = await this.#cartService.findById(cid);
+
+      const cartProduct = cart.products.find((p) => p._id.equals(pid));
+
+      const p_id = cartProduct.product._id; 
+
+      const productDeBBDD = await this.#productsService.findById(p_id);
+      productDeBBDD.stock = productDeBBDD.stock + cartProduct.quantity;
+
+      await this.#productsService.update(p_id, productDeBBDD);
+
       const productIndex = cart.products.findIndex(
         // Verifico si el producto ya existe en el carrito
         (p) => String(p._id) === pid
       );
-      
+
       if (productIndex === -1) {
         // Si el producto no existe en el carrito, enviar un error
         res.status(404).send({
@@ -88,6 +111,13 @@ class CartsController {
       }
 
       cart.products.splice(productIndex, 1); // Si el producto existe, eliminarlo del array de productos del carrito
+ 
+      const totalPrice = cart.products.reduce((acc, product) => {
+        return acc + product.product.price * product.quantity;
+      }, 0);
+  
+      cart.total = totalPrice;
+      
 
       await this.#cartService.update(cid, cart);
 
@@ -122,6 +152,7 @@ class CartsController {
     try {
       const { cid, pid } = req.params;
       const cart = await this.#cartService.findById(cid);
+      //console.log('cart', cart);
       const cartProduct = cart.products.find((p) => p._id.equals(pid));
 
       if (!cartProduct) {
@@ -135,6 +166,8 @@ class CartsController {
         cartProduct.quantity ++;
         cartProduct.total = cartProduct.quantity * cartProduct.product.price;
 
+        //console.log('cart', cart)
+
         const p_id = cartProduct.product._id; 
         const productWithMinusQuantity = await this.#productsService.findById(p_id);
         productWithMinusQuantity.stock--;
@@ -147,6 +180,12 @@ class CartsController {
           .status(400)
           .send({ error: "No hay más en stock"});
       }
+
+      const totalPrice = cart.products.reduce((acc, product) => {
+        return acc + product.product.price * product.quantity;
+      }, 0);
+  
+      cart.total = totalPrice;
 
       await this.#cartService.update(cid, cart);
 
@@ -187,6 +226,12 @@ class CartsController {
           .send({ error: "No hay más en stock"});
       }
 
+      const totalPrice = cart.products.reduce((acc, product) => {
+        return acc + product.product.price * product.quantity;
+      }, 0);
+  
+      cart.total = totalPrice;
+
       await this.#cartService.update(cid, cart);
 
       res.send(cart);
@@ -212,20 +257,6 @@ class CartsController {
       next(error);
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
 
 
 

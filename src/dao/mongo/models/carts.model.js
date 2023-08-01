@@ -19,6 +19,10 @@ const cartsSchema = new mongoose.Schema({
           }
         ],
         default: []          
+     },
+     total: {
+          type: Number,
+          default: 0,
      } 
 });
 

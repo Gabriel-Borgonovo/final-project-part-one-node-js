@@ -148,12 +148,10 @@ class ViewsController {
     try {
       const user_id = req.params.userId;
       const cart_id = req.params.cartId;
-      //const user = await usersModel.findOne({ _id: user_id });
+
       const user = await this.#usersService.findOne({ _id: user_id });
 
-      //const cart = await cartsManager.getCartById(cart_id);
       const cart = await this.#cartsService.findById(cart_id);
-      //console.log('cart desde views', cart)
       
       const products = cart.products.map((product) => {
         return {
@@ -161,7 +159,7 @@ class ViewsController {
           title: product.product.title,
           price: product.product.price,
           quantity: product.quantity,
-          total: product.total,
+          total: (product.quantity === 1) ?product.product.price :product.total || (product.quantity !== 1) ? (product.product.price * product.quantity) : null,
           _id: product._id,
         };
       });
@@ -172,6 +170,7 @@ class ViewsController {
         name: user.nombre,
         lastName: user.apellido,
         cart_id: cart_id,
+        total: cart.total,
       });
     } catch (error) {
       next(error);
