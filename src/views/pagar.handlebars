@@ -1,3 +1,46 @@
-<div>
+{{>navbar}}
+
+<div class="section-pagos">
     <h1>Pagar</h1>
+    
+    <div class="div-section-pagos">
+        <div class="div-pagar">
+            <form class="form-pagar">
+                <label>
+                    <span>Número de tarjeta</span>
+                    <input type="number" class="card-code" >
+                </label>
+                <label>
+                    <span>Nombre y apellido</span>
+                    <input type="text" class="card-date">
+                </label>
+            
+                <div class="card-numbers">
+                    <label class="label">
+                        <span>Fecha de vencimiento</span>
+                        <input type="text" class="card-date">
+                    </label>
+                    <label class="label">
+                        <span>Código de seguridad</span>
+                        <input type="number" class="card-code" >
+                    </label>
+                </div>
+                <label>
+                    <span>DNI del titular</span>
+                    <input type="number" class="card-code">
+                </label>
+            </form>
+        </div>
+
+        <div class="detalles-compra">
+            <h3>Detalles de la compra</h3>
+            <div>
+                <p>Total de la compra: $ <b>{{total}}</b></p>
+                <p>Cantidad de productos: <b>{{cantidad}}</b></p> 
+            </div>
+            <button>Confirmar</button>
+        </div>
+    </div>
 </div>
+
+{{>footer}} 

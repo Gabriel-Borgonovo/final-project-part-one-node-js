@@ -5,3 +5,18 @@
 {"code":66,"index":0,"level":"error","timestamp":"2023-07-30T22:03:25.279Z"}
 {"code":66,"index":0,"level":"error","timestamp":"2023-07-30T22:20:47.237Z"}
 {"code":66,"index":0,"level":"error","timestamp":"2023-07-30T22:26:02.698Z"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"pagar\" (type string) at path \"_id\" for model \"carts\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"pagar\"","value":"pagar","valueType":"string"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"pagar\" (type string) at path \"_id\" for model \"carts\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"pagar\"","value":"pagar","valueType":"string"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"pagar\" (type string) at path \"_id\" for model \"carts\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"pagar\"","value":"pagar","valueType":"string"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"pagar\" (type string) at path \"_id\" for model \"carts\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"pagar\"","value":"pagar","valueType":"string"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"pagar\" (type string) at path \"_id\" for model \"carts\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"pagar\"","value":"pagar","valueType":"string"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"pagar\" (type string) at path \"_id\" for model \"carts\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"pagar\"","value":"pagar","valueType":"string"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"pagar\" (type string) at path \"_id\" for model \"carts\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"pagar\"","value":"pagar","valueType":"string"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"pagar\" (type string) at path \"_id\" for model \"carts\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"pagar\"","value":"pagar","valueType":"string"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"pagar\" (type string) at path \"_id\" for model \"carts\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"pagar\"","value":"pagar","valueType":"string"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"pagar\" (type string) at path \"_id\" for model \"carts\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"pagar\"","value":"pagar","valueType":"string"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"pagar\" (type string) at path \"_id\" for model \"carts\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"pagar\"","value":"pagar","valueType":"string"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"pagar\" (type string) at path \"_id\" for model \"carts\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"pagar\"","value":"pagar","valueType":"string"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"pagar\" (type string) at path \"_id\" for model \"carts\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"pagar\"","value":"pagar","valueType":"string"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"pagar\" (type string) at path \"_id\" for model \"carts\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"pagar\"","value":"pagar","valueType":"string"}
+{"kind":"ObjectId","message":"Cast to ObjectId failed for value \"pagar\" (type string) at path \"_id\" for model \"carts\"","name":"CastError","path":"_id","reason":{},"stringValue":"\"pagar\"","value":"pagar","valueType":"string"}

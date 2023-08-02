@@ -35,7 +35,7 @@ route.get('/restore-password/form/:email', viewsController.restorePasswordForm.b
 
 route.get('/add-new-product', authenticated, authorized(['premium']), viewsController.addProductForm.bind(viewsController));
 
-route.get('/pagar', viewsController.pagarCompra.bind(viewsController));
+route.get('/pagar/:cid', authenticated, authorized(['user']), viewsController.pagarCompra.bind(viewsController));
 
 route.get('/upload-docs', authenticated, authorized(['user']), viewsController.uploadDocs.bind(viewsController));
 

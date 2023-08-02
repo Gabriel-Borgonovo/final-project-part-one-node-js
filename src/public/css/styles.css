@@ -990,6 +990,79 @@ button.active{
 }
 
 
+/**
+Formulario para pagar
+*/
+
+.section-pagos{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f2f5;
+}
+
+.div-section-pagos{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+
+
+form.form-pagar{
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    border-radius: 20px;
+    gap: 10px;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.356);
+}
+
+.card-numbers{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+input[type="text"].card-date,
+input[type="number"].card-code{
+    width: 100%;
+    max-width: none;
+    border: thin solid rgb(185, 185, 185);
+}
+
+.label{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.label span {
+    align-self: self-start;
+}
+
+/* .div-pagar{
+    align-self: flex-start;
+} */
+
+.detalles-compra{
+    background-color: #ffffff;
+    height: max-content;
+    padding: 60px 40px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.356);
+}
+
+
 @media screen and (min-width:950px) {
     .cart-table{
         width: 60%;

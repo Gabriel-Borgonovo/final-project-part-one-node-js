@@ -45,7 +45,7 @@
     </table>
     <div class="container-go-products">
         <a href="/products" class="btn-send-msg btn-go-products">Productos</a>
-        <button class="btn-send-msg btn-go-products" id="cart-id" onclick="generateTicket('{{cart_id}}')">Comprar</button>
+        <button class="btn-send-msg btn-go-products" id="cart-id" onclick="goFormPagar('{{cart_id}}')">Comprar</button>
         <p class="p-total-price">Total de la compra: <b>$<span>{{total}}</span></b></p>
     </div>
     
@@ -158,8 +158,14 @@ restarQuantity();
     }
   }
 
-  async function calcularTotal() {
-
+  
+  
+  
+  async function goFormPagar(cart_id) {
+    console.log('cart id type', typeof cart_id)
+    
+    window.location.href = `http://localhost:8080/pagar/${cart_id}`
   }
+  
 </script>
 

@@ -262,8 +262,37 @@ class ViewsController {
 
   async pagarCompra(req, res, next){
     try {
+      const {cid} = req.params;
+
+      const email = req.user.email;
+      const nombre = req.user.nombre;
+      const apellido = req.user.apellido;
+
+      const cart = await this.#cartsService.findById(cid);
+      
+      if(!cart){
+        res.status(404).send({error: 'error', message: 'El carrito no existe.'});
+      }
+
+      const total = cart.total;
+      const products = cart.products;
+
+      //console.log(products)
+      const productsQuantity = products.reduce((acc, prod) => {
+        return acc + prod.quantity;
+      }, 0);
+
+      const cantidades = productsQuantity;
+      //console.log(cantidades);
+
       res.render('pagar', {
         styles: 'styles',
+        cart_id: cid,
+        email: email,
+        name: nombre,
+        lastName: apellido,
+        total: total,
+        cantidad: cantidades,
       })
     } catch (error) {
       next(error);
