@@ -277,7 +277,10 @@ class ViewsController {
       const total = cart.total;
       const products = cart.products;
 
-      //console.log(products)
+      const reformattedProducts = products.map(item => item.product.title);
+      const fecha = new Date().toLocaleString();
+
+      //console.log('productos reformateados', reformattedProducts)
       const productsQuantity = products.reduce((acc, prod) => {
         return acc + prod.quantity;
       }, 0);
@@ -293,6 +296,8 @@ class ViewsController {
         lastName: apellido,
         total: total,
         cantidad: cantidades,
+        titles: reformattedProducts,
+        fecha: fecha,
       })
     } catch (error) {
       next(error);
@@ -321,6 +326,8 @@ class ViewsController {
       next(error);
     }
   }
+
+
 
 }
 

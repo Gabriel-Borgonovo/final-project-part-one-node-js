@@ -1,0 +1,16 @@
+<div>
+    <h1>Ticket</h1>
+    <div class="div-detalles">
+    <p>Total de la compra: $ <b>{{total}}</b></p>
+    <p>Cantidad de productos: <b>{{quantity}}</b></p>
+    <ul>
+        {{#each products}}
+            <li>
+                <p>Producto: {{this.product.title}}</p>
+                <p>Cantidad: {{this.quantity}}</p>
+                <p>Total: ${{this.total}}</p>
+            </li>
+        {{/each}}
+    </ul>
+</div>
+</div>

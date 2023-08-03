@@ -8,39 +8,131 @@
             <form class="form-pagar">
                 <label>
                     <span>Número de tarjeta</span>
-                    <input type="number" class="card-code" >
+                    <input type="number" class="card-code number-card" >
                 </label>
                 <label>
                     <span>Nombre y apellido</span>
-                    <input type="text" class="card-date">
+                    <input type="text" class="card-date full-name">
                 </label>
             
                 <div class="card-numbers">
                     <label class="label">
                         <span>Fecha de vencimiento</span>
-                        <input type="text" class="card-date">
+                        <input type="text" class="card-date vencimiento">
                     </label>
                     <label class="label">
                         <span>Código de seguridad</span>
-                        <input type="number" class="card-code" >
+                        <input type="number" class="card-code segurity-code" >
                     </label>
                 </div>
                 <label>
                     <span>DNI del titular</span>
-                    <input type="number" class="card-code">
+                    <input type="number" class="card-code dni-number">
                 </label>
             </form>
+
+            <div class="ticket-final">
+                <div class="displayFlex">
+                <p>Fecha: {{fecha}}</p>
+                <h3>ticket</h3>
+                <p>Comprador: <b>{{name}} {{lastName}}</b></p>
+                <p>DNI: <b class="dni-user"></b></p>
+                <p>Carrito nro: {{cart_id}}</p>
+                <div><span>Productos:</span>
+                    {{#each titles}}
+                        <p>{{this}}</p>
+                    {{/each}}
+                </div>
+                <p>Cantidad: <b>{{cantidad}}</b> productos</p>
+                <p>Total: $ <b>{{total}}</b></p>
+                </div>
+            </div>
+
+            <p class="p-gracias">Su pago fue procesado con exito. Muchas gracias por su compra!!!</p>
         </div>
 
         <div class="detalles-compra">
-            <h3>Detalles de la compra</h3>
-            <div>
+            <h3 class="h3-pagos">Detalles de la compra</h3>
+            <div class="div-detalles">
                 <p>Total de la compra: $ <b>{{total}}</b></p>
                 <p>Cantidad de productos: <b>{{cantidad}}</b></p> 
             </div>
-            <button>Confirmar</button>
+            <button class="btn-confirmar-compra pagar-btn" onclick="confirmarCompra('{{cart_id}}')">Confirmar</button>
+            <button class="btn-confirmar-compra btn-ticket">Ticket</button>
         </div>
     </div>
 </div>
 
 {{>footer}} 
+
+<script>
+
+    const cardNumber = document.querySelector('.number-card');
+    const fullName = document.querySelector('.full-name');
+    const expireDate = document.querySelector('.vencimiento');
+    const securityCode = document.querySelector('.segurity-code');
+    const dni = document.querySelector('.dni-number');
+    const form = document.querySelector('.form-pagar');
+    const divForm = document.querySelector('.div-pagar');
+    const btnPagar = document.querySelector('.pagar-btn');
+    const btnTicket = document.querySelector('.btn-ticket');
+    const ticket = document.querySelector('.ticket-final');
+    const gracias_p = document.querySelector('.p-gracias');
+    const detallesCompra = document.querySelector('.detalles-compra')
+    
+    
+
+    async function confirmarCompra(cid) {
+
+        if(cardNumber.value === ''){
+            cardNumber.style.border = '1px solid red';
+            alert('debes completar este campo');
+            return;
+        }
+
+         if(fullName.value === ''){
+            fullName.style.border = '1px solid red';
+            alert('debes completar este campo');
+            return;
+        }
+
+        if(expireDate.value === ''){
+            expireDate.style.border = '1px solid red';
+            alert('debes completar este campo');
+            return;
+        }
+
+        if(securityCode.value === ''){
+            securityCode.style.border = '1px solid red';
+            alert('debes completar este campo');
+            return;
+        }
+
+        if(dni.value === ''){
+            dni.style.border = '1px solid red';
+            alert('debes completar este campo');
+            return;
+        }
+
+        form.style.display = 'none';
+
+        gracias_p.style.display = 'block';
+ 
+        btnPagar.style.display = 'none';
+
+        btnTicket.style.display = 'block';
+
+        const dniUser = document.querySelector('.dni-user');
+
+        dniUser.textContent = dni.value;
+       
+    }
+
+    btnTicket.addEventListener('click', () => {
+       // divForm.innerHTML = '';
+        gracias_p.style.display = 'none'
+        ticket.style.display = 'block';
+        detallesCompra.style.display = 'none'
+    })
+
+</script>

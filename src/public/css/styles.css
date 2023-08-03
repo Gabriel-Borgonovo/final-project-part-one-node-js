@@ -995,12 +995,19 @@ Formulario para pagar
 */
 
 .section-pagos{
+    padding-top: 100px;
     height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: #f0f2f5;
+    padding-bottom: 100px;
+}
+
+.section-pagos h1 {
+    padding-bottom: 20px;
+    color: #000000bd;
 }
 
 .div-section-pagos{
@@ -1057,11 +1064,78 @@ input[type="number"].card-code{
 .detalles-compra{
     background-color: #ffffff;
     height: max-content;
-    padding: 60px 40px;
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
     border-radius: 20px;
     box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.356);
 }
 
+.h3-pagos{
+    padding-bottom: 15px;
+    border-bottom: thin solid rgb(185, 185, 185);
+    color: #000000bd;
+}
+
+.div-detalles{
+    padding-top: 15px;
+    padding-bottom: 20px;
+}
+
+.div-detalles p {
+    color: #515152;
+}
+
+.div-detalles p b{
+    font-size: 20px;
+    color: #000000bd;
+}
+
+.btn-confirmar-compra{
+    border: none;
+    background-color: #1877f2;
+    color: #fff;
+    font-size: 19px;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;  
+}
+
+.btn-ticket {
+    display: none;
+}
+
+.p-gracias{
+    display: none;
+}
+
+.ticket-final{
+    display: none;
+    background-color: #fff;
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.356);
+    width: 350px;
+    height: 400px;
+}
+
+.displayFlex {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.displayFlex h3{
+    background-color: rgb(122, 248, 122);
+    text-align: center;
+    padding: 10px;
+}
 
 @media screen and (min-width:950px) {
     .cart-table{
