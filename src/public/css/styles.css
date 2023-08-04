@@ -770,8 +770,23 @@ button.blue{
     font-size: 18px;
 }
 
+.prem-btn{
+    border: none;
+    cursor: pointer;
+}
+
+
+
 button.blue:hover {
     background-color: #dd1541;
+}
+
+.prem-btn b{
+    color: #2f2f30;
+}
+
+.bgr{
+    background: none;
 }
 
 input[type="number"].border,

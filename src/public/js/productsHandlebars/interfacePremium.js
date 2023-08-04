@@ -6,8 +6,8 @@ async function interfazPremium(role) {
       const b = document.createElement('b');
       b.classList.add('link-for-premium');
       b.innerHTML = `
-          <a href="http://localhost:8080/add-new-product" class="a-premium">
-          <img src="https://cdn-icons-png.flaticon.com/512/189/189689.png" class="add-product-icon" /> Agregar nuevo producto</a>
+          <button class="a-premium prem-btn bgr" onclick="goFormAddProd()">
+          <img src="https://cdn-icons-png.flaticon.com/512/189/189689.png" class="add-product-icon" /><b>Agregar nuevo producto</b></button>
         `;
 
       userRole.appendChild(b);
@@ -20,7 +20,7 @@ async function interfazPremium(role) {
    if(role === 'user') {
     userRole.innerHTML = `
         <b class="link-for-premium">Conoce nuestros productos !!!</b>
-        <a href="http://localhost:8080/upload-docs" class="premium-link"><i class="fa-solid fa-id-card"></i><span>Adquirí el role premium</span></a>  
+        <button  class="premium-link prem-btn" onclick="goDocsLoader()"><i class="fa-solid fa-id-card"></i><span>Adquirí el role premium</span></button>  
       `;
     }
 
@@ -28,8 +28,8 @@ async function interfazPremium(role) {
       const b = document.createElement('b');
       b.classList.add('link-for-premium');
       b.innerHTML = `
-          <a href="http://localhost:8080/users" class="a-premium">
-          <img src="https://cdn-icons-png.flaticon.com/256/9131/9131529.png" class="add-product-icon" /> Administrar usuarios</a>
+          <button  class="a-premium prem-btn bgr" onclick="goPanelUsers()">
+          <img src="https://cdn-icons-png.flaticon.com/256/9131/9131529.png" class="add-product-icon" /><b>Administrar usuarios</b></button>
         `;
 
       userRole.appendChild(b);
@@ -38,4 +38,16 @@ async function interfazPremium(role) {
         btn.style.display = 'block';
       });
     }
+  }
+
+  function goDocsLoader() {
+    window.location.href = '/upload-docs';
+  }
+
+  function goPanelUsers() {
+    window.location.href = '/users';
+  }
+
+  function goFormAddProd() {
+    window.location.href = '/add-new-product';
   }
