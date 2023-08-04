@@ -1,6 +1,7 @@
 import { socketServer } from "../socket/configure-socket.js";
 import ProductsService from '../dao/services/products.service.js';
 import UsersService from "../dao/services/users.service.js";
+import emailService from "../dao/services/mail/mail.service.js";
 
 
 
@@ -100,6 +101,15 @@ class ProductsController {
       
       await this.#service.delete(productId);
       socketServer.emit("Productdelete", productToDelete);
+
+      const { email } = req.user;
+
+      emailService.sendEmail({
+        to: email,
+        subject: "Producto eliminado",
+        html: `<h1>Hello ${email}!</h1>
+          <p>El producto de su pertenencia cuyo id es ${productId} fue eliminado</p>`
+      });
   
       res.send({
         ok: true,

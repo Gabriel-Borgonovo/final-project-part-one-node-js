@@ -746,6 +746,7 @@ button.active{
 
 .addProductContainer,
 .rest-pass-container{
+    background-color: #f0f2f5;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -755,8 +756,27 @@ button.active{
 
 .product-form,
 .form-rest-pass{
-    background-color: rgb(162, 178, 221);
+    width: 400px;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.37);
+    border-radius: 20px;
     padding: 20px;
+}
+
+button.blue{
+    background-color: #1877f2;
+    color: #fff;
+    font-size: 18px;
+}
+
+button.blue:hover {
+    background-color: #dd1541;
+}
+
+input[type="number"].border,
+input[type="text"].border{
+    border: thin solid rgba(0, 0, 0, 0.342);
 }
 
 .email-input{

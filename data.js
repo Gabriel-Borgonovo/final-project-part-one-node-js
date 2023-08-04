@@ -14,11 +14,11 @@ const datosConection = {
     SESSION_SECRET: env.SESSION_SECRET,
     PERSISTENCE_TYPE: env.PERSISTENCE_TYPE,
     MAIL: {
-        host: 'smtp.ethereal.email',
-        port: 587,
+        host: env.MAIL_HOST,
+        port: env.MAIL_PORT,
         auth: {
-            user: 'dariana49@ethereal.email',
-            pass: '4XrVTf8BpSwsneUX5X'
+            user: env.MAIL_USER,
+            pass: env.MAIL_PASS
         }
     },
     };

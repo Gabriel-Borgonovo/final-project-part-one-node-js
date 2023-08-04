@@ -4,16 +4,20 @@
     <h1>Agregar nuevo producto</h1>
     <p class="user-email">{{email}}</p>
     <form class="product-form form-disp">
-        <input type="text" id="codep" placeholder="code" />
-        <input type="text" id="titlep" placeholder="Nombre del producto" />
-        <input type="text" id="descrip" placeholder="Descripción del producto" />
-        <input type="text" id="pricep" placeholder="Precio" />
-        <input type="text" id="stockp" placeholder="Stock" />
-        <input type="text" id="categoryp" placeholder="Categoria" />
-        <input type="file" id="imgp" />
-        <button id="btn-new-product">Enviar</button>
+        <input type="text" class="border" id="codep" placeholder="code" />
+        <input type="text" class="border" id="titlep" placeholder="Nombre del producto" />
+        <input type="text" class="border" id="descrip" placeholder="Descripción del producto" />
+        <input type="number" class="border" id="pricep" placeholder="Precio" />
+        <input type="number" class="border" id="stockp" placeholder="Stock" />
+        <input type="text" class="border" id="categoryp" placeholder="Categoria" />
+        <label for="imgp" class="custom-file-input">
+            <i class="fa fa-cloud-upload"></i> Subir archivo
+        </label>
+        <input type="file" id="imgp" style="display: none;"/>
+        <button id="btn-new-product" class="send-document-pdf blue">Enviar</button>
     </form>
 </div>
+{{>footer}}
 
 <script>
     const d = document;
@@ -31,6 +35,49 @@
     
     btnNewProduct.addEventListener('click', (e) => {
         e.preventDefault();
+
+        if(inputCode.value === ''){
+            inputCode.style.border = '1px solid red';
+            alert('debes completar este campo');
+            return;
+        }
+
+        if(inputName.value === ''){
+            inputName.style.border = '1px solid red';
+            alert('debes completar este campo');
+            return;
+        }
+
+        if(inputDescription.value === ''){
+            inputDescription.style.border = '1px solid red';
+            alert('debes completar este campo');
+            return;
+        }
+
+        if(inputPrice.value === ''){
+            inputPrice.style.border = '1px solid red';
+            alert('debes completar este campo');
+            return;
+        }
+
+        if(inputStock.value === ''){
+            inputStock.style.border = '1px solid red';
+            alert('debes completar este campo');
+            return;
+        }
+
+        if(inputCategory.value === ''){
+            inputCategory.style.border = '1px solid red';
+            alert('debes completar este campo');
+            return;
+        }
+
+        if(inputImg.files.length === 0){
+            //inputCode.style.border = '1px solid red';
+            alert('debes subir una imagen de tu producto');
+            return;
+        }
+
         const newProducto = {
             code: inputCode.value,
             title: inputName.value,
