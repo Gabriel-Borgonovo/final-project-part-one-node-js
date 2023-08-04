@@ -25,7 +25,15 @@ class UsersController {
 
   async get(req, res, next) {
     const usuarios = await this.#service.find();
-    res.send(usuarios);
+
+    const newUsers = usuarios.map((user) => ({
+      nombre: user.nombre,
+      apellido: user.apellido,
+      role: user.role,
+      email: user.email,
+    }));
+    
+    res.send({ Usuarios: newUsers });
   }
 
   async updateUser(req, res, next) {
@@ -77,6 +85,17 @@ class UsersController {
 
       res.status(200).send({message: 'Usuario actualizado', user: user});
 
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteUser(req, res, next) {
+    try {
+      const { uid } = req.params;
+
+      await this.#service.delete(uid);
+      res.send({status: 'ok', message: `Usuario eliminado con exito`});
     } catch (error) {
       next(error);
     }

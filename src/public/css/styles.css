@@ -1137,6 +1137,26 @@ input[type="number"].card-code{
     padding: 10px;
 }
 
+
+
+/**Interface de usuarios*/
+.users-interface{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f2f5;
+}
+
+.user-tr td{
+    padding: 10px;
+}
+
+/* .user-tr {
+    background-color: #f39caf;
+} */
+
 @media screen and (min-width:950px) {
     .cart-table{
         width: 60%;

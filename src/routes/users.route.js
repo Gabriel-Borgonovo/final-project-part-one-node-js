@@ -8,5 +8,6 @@ route.get('/', usersController.get.bind(usersController));
 route.post('/', usersController.create.bind(usersController));
 route.post('/:uid', authenticated, authorized(["user"]), documentUploader.array('documents', 2), usersController.uploadDocuments.bind(usersController));
 route.put('/premium/:uid', usersController.updateUser.bind(usersController));
+route.delete('/deleteUser/:uid', authenticated, authorized(['admin']), usersController.deleteUser.bind(usersController));
 
 export default route;

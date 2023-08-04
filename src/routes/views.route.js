@@ -16,7 +16,7 @@ route.get('/chat',authenticated, authorized(['user']), viewsController.getChat.b
 
 /***vista de producto seleccionado por id */
 
-route.get('/products/:id', authenticated, authorized(['user', 'admin']), viewsController.getProductById.bind(viewsController));
+route.get('/products/:id', authenticated, authorized(['user']), viewsController.getProductById.bind(viewsController));
 
 
 /***vista de carrito seleccionado por id */
@@ -38,5 +38,7 @@ route.get('/add-new-product', authenticated, authorized(['premium']), viewsContr
 route.get('/pagar/:cid', authenticated, authorized(['user']), viewsController.pagarCompra.bind(viewsController));
 
 route.get('/upload-docs', authenticated, authorized(['user']), viewsController.uploadDocs.bind(viewsController));
+
+route.get('/users', authenticated, authorized(['admin']), viewsController.renderUsers.bind(viewsController));
 
 export default route;

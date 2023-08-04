@@ -1,0 +1,72 @@
+ {{> navbar}}
+
+<div class="users-interface">
+    <h1>Gestión de usuarios</h1>
+    <p>Bienvenido administrador <b>{{email}}</b></p>
+    <div>
+        <table>
+            <thead class="cart-thead">
+                <tr class="cart-tr">
+                    <th class="cart-th">Nombre</th>
+                    <th class="cart-th">Apellido</th>
+                    <th class="cart-th">Email</th>
+                    <th class="cart-th">Edad</th>
+                    <th class="cart-th">Role</th>
+                    <th class="cart-th">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="cart-body">
+                {{#if users}}
+                    {{#each users}}
+                    <tr class="cart-tr user-tr">
+                        <td class="td-user">{{this.nombre}}</td>
+                        <td class="td-user">{{this.apellido}}</td>
+                        <td class="td-user">{{this.email}}</td>
+                        <td class="td-user">{{this.edad}}</td>
+                        <td class="td-user">{{this.role}}</td>
+                        <td class="td-user"><button class="btn-delete-product active-btn" onclick="deleteUser('{{this._id}}')"><img src="https://cdn-icons-png.flaticon.com/512/39/39220.png" class="icon-delete-img" /></button></td>
+                    </tr>
+                    {{/each}}
+                {{/if}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+ {{> footer}}
+
+ <script>
+    async function deleteUser(uid) {
+
+        Swal.fire({
+            icon: 'warning',
+            text: `Deseas eliminar al usuario ${uid} !`,
+            showConfirmButton: true,
+            confirmButtonText: 'Si, eliminalo!',
+            showCancelButton: true,
+            cancelButtonText: 'No, cancelar!',
+        }).then(async (result) => {
+
+            if (result.isConfirmed) {
+                const url = `/api/users/deleteUser/${uid}`
+                const response = await fetch(url, {
+                    method: 'DELETE',
+                });
+
+                if(response.ok) {
+                    console.log('La información fue enviada correctemente');
+                    Swal.fire(
+                        'Eliminado!',
+                        `El usuario con id ${uid}.`,
+                        'success'
+                    ).then(() => {
+                        window.location.reload();
+                    });
+                }
+                
+            }
+            
+        });
+        
+    }
+ </script>

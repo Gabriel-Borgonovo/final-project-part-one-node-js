@@ -23,4 +23,19 @@ async function interfazPremium(role) {
         <a href="http://localhost:8080/upload-docs" class="premium-link"><i class="fa-solid fa-id-card"></i><span>Adquirí el role premium</span></a>  
       `;
     }
+
+    if(role === 'admin') {
+      const b = document.createElement('b');
+      b.classList.add('link-for-premium');
+      b.innerHTML = `
+          <a href="http://localhost:8080/users" class="a-premium">
+          <img src="https://cdn-icons-png.flaticon.com/256/9131/9131529.png" class="add-product-icon" /> Administrar usuarios</a>
+        `;
+
+      userRole.appendChild(b);
+      
+      btnsDelete.forEach((btn) => {
+        btn.style.display = 'block';
+      });
+    }
   }

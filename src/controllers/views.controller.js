@@ -327,6 +327,40 @@ class ViewsController {
     }
   }
 
+  async renderUsers(req, res, next) {
+    try {
+      const user = req.user;
+      const userDb = await this.#usersService.findByEmail(user.email);
+      if(!userDb){
+        res.status(404).send({ error: 'error', message: 'User Not found' })
+      }
+
+      const users = await this.#usersService.find();
+
+      //console.log('users', users)
+
+      const usersMapeados = users.map((user) => ({
+        _id: user._id,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        email: user.email,
+        edad: user.edad,
+        role: user.role,
+      }));
+
+      //console.log('users', usersMapeados)
+
+      res.render('users', {
+        styles: 'styles',
+        email: user.email,
+        name: user.nombre,
+        lastName: user.apellido,
+        users: usersMapeados,
+      });  
+    } catch (error) {
+      next(error);
+    }
+  }
 
 
 }

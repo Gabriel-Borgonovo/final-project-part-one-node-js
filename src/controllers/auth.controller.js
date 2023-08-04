@@ -20,7 +20,12 @@ class AuthController {
           .status(401)
           .send({ error: "Usuario o contraseña incorrectos" });
       }
-      //console.log('user auth', user)
+
+      /************************************** */
+      const currentTime = new Date().toISOString();
+      console.log('last connection', currentTime);
+
+      /*********************************** */
       
       const userToToken = {
         nombre: user.nombre,
@@ -150,10 +155,34 @@ class AuthController {
 
   async logout(req, res, next) {
     try {
+      const user = await this.#service.findByEmail(req.session.user);
+      
+       // Verificar si el usuario es inactivo y eliminarlo si es necesario
+       if (user) {
+        const lastConnection = new Date(user.last_connection);
+        const currentTime = new Date();
+        const timeSinceLastConnection = (currentTime - lastConnection) / (1000 * 60); // Diferencia en minutos
+
+        if (timeSinceLastConnection >= 2880) { 
+          // Eliminar el usuario y enviar correo electrónico
+          await this.#service.delete(user._id);
+
+          const { email } = user;
+          emailService.sendEmail({
+            to: email,
+            subject: "Aviso de eliminación",
+            html: `<h1>Hola ${email}</h1>
+            <p>Su cuenta ha sido eliminada por falta de uso</p>
+            <a href="http://localhost:8080/register" target="_blank" >Acceda aquí para crear una nueva cuenta</a>`
+          });
+        }
+      }
+
       req.session.destroy((err) => {
         if (err) {
           res.status(500).send({ error: err });
         } else {
+          res.clearCookie("token");
           res.redirect("/login");
         }
       });
